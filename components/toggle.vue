@@ -1,6 +1,6 @@
 <template>
     <div class="py-2">
-      <label :for="id" class="mt-5 block text-sm/6 font-medium text-gray-900">{{ label }}</label>
+      <label :for="id" class=" mb-2 block text-sm/6 font-medium text-gray-900">{{ label }}</label>
       
       <Switch
         v-model="enabled"

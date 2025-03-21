@@ -1,24 +1,17 @@
 <template>
-    <div>
-        <Header />
-        <main>
-            <NuxtPage />
-        </main>
-        <Footer />
-    </div>
+    <Header />
+    <main class="min-h-screen flex flex-col justify-between bg-sky-100">
+      <NuxtPage />
+    </main>
+    <Footer />
   </template>
   
-  <script>
-    import Header from "../components/header.vue"
-    import Footer from "../components/footer.vue"
-    export default {
-        name: '',
-
-        data() {
-            return {
-            };
-        },
-
-        methods: {},
-    };
+  <script lang="ts">
+  import Header from "../components/header.vue";
+  import Footer from "../components/footer.vue";
+  
+  export default {
+    name: 'Layout'
+  };
   </script>
+  

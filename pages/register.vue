@@ -1,9 +1,9 @@
 <template>
-  <div class="container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
+  <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
     <h2 class="text-base/11 font-semibold text-gray-900">
       Cadastro de Usuário
     </h2>
-    <form @submit.prevent="submitForm">     
+    <form @submit.prevent="submitForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">   
 
       <div :class="{ error: v$.firstName.$errors.length }">
         <Input v-model="form.firstName"         
@@ -135,6 +135,7 @@
             :errorClass="v$.state.$dirty && !v$.state.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.state.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
             @input="remove"
             v-mask="'AA'"
+            placeholder="Digite o seu estado"
           />
         <div class="input-errors" 
         v-for="error of v$.state.$errors" 
@@ -160,9 +161,9 @@
       </div>
 
       <div :class="{ error: v$.car.$errors.length }">
-        <div class="flex gap-2 justify-between items-center w-100">
+        <div class="grid grid-cols-[auto_1fr] gap-2 items-center">
         <Toggle v-model="form.car" label="Possui carro?" id="car"/>
-        <a class="hover:text-cyan-800" href="#" @click.prevent="openModal = true">Porque precisamos dessa informação?</a>
+        <a class="text-center text-sm hover:text-cyan-800" href="#" @click.prevent="openModal = true">Porque precisamos dessa informação?</a>
       </div>
       <div class="input-errors" 
         v-for="error of v$.car.$errors" 
@@ -210,7 +211,7 @@
           </div>
         </div>
         
-      <button class="text-white px-4 rounded-sm 
+      <button class="sm:w-full md:w-max lg:w-max col-span-full text-white px-4 rounded-sm 
         sm:px-8 py-2 sm:py-3 bg-sky-700 cursor-pointer mt-3 mb-3
         hover:bg-sky-800">
         Cadastrar
