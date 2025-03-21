@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 
-// Interface para a estrutura do formulário
 interface UserForm {
   firstName: string;
   cpf: string;
@@ -13,12 +12,11 @@ interface UserForm {
   state: string;
   income: string;
   car: boolean;
-  pet: string;
+  pet: number;
   petBreed: {};
   [key: string]: any;
 }
 
-// Interface para a resposta da API
 interface ApiResponse {
   success: boolean;
   data?: any;
@@ -30,8 +28,7 @@ export const useUserService = (form: UserForm, v$?: Ref<any>) => {
    * Envia os dados do formulário para API
    * @returns Objeto com o resultado da operação
    */
-  const submitUserData = async (): Promise<ApiResponse> => {
-    // Se o validador for fornecido, valida o formulário antes de enviar
+  const submitUserData = async (): Promise<ApiResponse> => {    
     if (v$) {
       const isValid = await v$.value.$validate();
       if (!isValid) {

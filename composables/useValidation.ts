@@ -15,8 +15,8 @@ export const useValidation = () => {
     state: '',
     income: '',
     car: true,
-    pet: '',
-    petBreed: ''
+    pet: true,
+    petBreed: null
   });
   
   const nameRegex = helpers.withMessage(
@@ -86,6 +86,24 @@ export const useValidation = () => {
     }
   ); 
 
+  const stateRegex = helpers.withMessage(
+    'O estado deve ser informado no formato abreviado. Ex: SP, RJ, MA',
+    (value: string) => /^[A-Z]{2}$/.test(value)
+  );
+
+  const carRegex = helpers.withMessage(
+    'É obrigatório selecionar “sim”',
+    (value: boolean) => value === true
+  );
+
+  /*const petBreedRegex = helpers.withMessage(
+    'É obrigatório selecionar uma raça válida.',
+    (value: number) => {
+      return value > 1;
+    }
+  );*/
+  
+
   // Regras de validação
   const rules = {
     firstName: { 
@@ -118,12 +136,21 @@ export const useValidation = () => {
     },
     state: { 
       required: helpers.withMessage('O Estado é obrigatório.', required),
+      stateRegex
     },
     neighborhood: { 
       required: helpers.withMessage('O Bairro é obrigatório.', required),
     },
     address: { 
       required: helpers.withMessage('O Endereço é obrigatório.', required),
+    },
+    car: { 
+      required: helpers.withMessage('É obrigatório selecionar “sim”', required),
+      carRegex
+    },
+    petBreed: { 
+      required: helpers.withMessage('Selecione uma opção', required),
+      //petBreedRegex
     }
   };
       
@@ -140,6 +167,8 @@ export const useValidation = () => {
     if (form.state) v$.value.state.$touch();
     if (form.neighborhood) v$.value.neighborhood.$touch();
     if (form.address) v$.value.address.$touch();
+    if (form.car) v$.value.car.$touch();
+    if (form.petBreed) v$.value.petBreed.$touch();
   };  
 
   return {

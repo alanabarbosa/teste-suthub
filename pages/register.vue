@@ -159,29 +159,60 @@
         </div>
       </div>
 
-      <div class="flex gap-2 justify-between items-center w-100">
+      <div :class="{ error: v$.car.$errors.length }">
+        <div class="flex gap-2 justify-between items-center w-100">
         <Toggle v-model="form.car" label="Possui carro?" id="car"/>
         <a class="hover:text-cyan-800" href="#" @click.prevent="openModal = true">Porque precisamos dessa informação?</a>
+      </div>
+      <div class="input-errors" 
+        v-for="error of v$.car.$errors" 
+        :key="error.$uid">
+          <p class="error-msg text-red-800">{{ error.$message }}</p>
+        </div>
       </div>
 
       <Modal :open="openModal" @close="openModal = false" />
 
       <Toggle v-model="form.pet" label="Espécie do pet?" id="pet" yesLabel="Cão" noLabel="Gato" />
+
+      <div :class="{ error: v$.petBreed.$errors.length }">
+          <div class="flex gap-2 justify-between items-center w-100">
+            <Select 
+              v-if="form.pet"
+              label="Raça do pet" 
+              :options="dogBreed" 
+              id="petBreed" 
+              v-model="form.petBreed"
+              :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id > 0 
+              ? 'border-2 border-green-500 rounded-md' 
+              : v$.petBreed.$dirty && (!form.petBreed || form.petBreed.id === 0) 
+              ? 'border-3 border-red-500 rounded-md' 
+              : ''"
+            />
+            <Select 
+              v-if="!form.pet"
+              label="Raça do pet" 
+              :options="catBreed" 
+              id="petBreed"
+              v-model="form.petBreed"
+              :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id > 0 
+              ? 'border-2 border-green-500 rounded-md' 
+              : v$.petBreed.$dirty && (!form.petBreed || form.petBreed.id === 0) 
+              ? 'border-3 border-red-500 rounded-md' 
+              : ''"
+            />
+          </div>
+          <div class="input-errors" 
+            v-for="error of v$.petBreed.$errors" 
+            :key="error.$uid">
+            <p class="error-msg text-red-800">{{ error.$message }}</p>
+          </div>
+        </div>
+
+    
       
-      <Select 
-        v-if="form.pet"
-        label="Raça do pet" 
-        :options="dogBreed" 
-        v-model="form.petBreed" 
-        id="petBreed" 
-      />
-      <Select 
-          v-if="!form.pet"
-          label="Raça do pet" 
-          :options="catBreed" 
-          v-model="form.petBreed" 
-          id="petBreed" 
-        />
+
+
 
    
       <button class="text-white px-4 rounded-sm 
@@ -221,37 +252,24 @@ export default {
     };
 
     const dogBreed = [
-      { name: 'Labrador Retriever' },
-      { name: 'Pastor Alemão' },
-      { name: 'Golden Retriever' },
-      { name: 'Bulldog Francês' },
-      { name: 'Poodle' },
-      { name: 'Outro' },
-    ]
+      { id: 0, name: 'Selecione uma opção' },
+      { id: 1, name: 'Labrador Retriever' },
+      { id: 2, name: 'Pastor Alemão' },
+      { id: 3, name: 'Golden Retriever' },
+      { id: 4, name: 'Bulldog Francês' },
+      { id: 5, name: 'Poodle' },
+      { id: 6, name: 'Outro' },
+    ];
 
     const catBreed = [
-      { name: 'Persa' },
-      { name: 'Siamês' },
-      { name: 'Maine Coon' },
-      { name: 'Bengal' },
-      { name: 'Sphynx' },
-      { name: 'Outro' },
-    ]
-
-    if (form.pet === undefined) {
-      form.pet = true; // Por padrão, começa com "Cão"
-    }
-    
-    // Limpar a raça quando mudar o tipo de pet
-    const watchPetType = () => {
-      if (form.petBreed) {
-        form.petBreed = null;
-      }
-    };
-    
-    // Observar mudanças no tipo de pet
-    watch(() => form.pet, watchPetType);
-
+      { id: 0, name: 'Selecione uma opção' },
+      { id: 1, name: 'Persa' },
+      { id: 2, name: 'Siamês' },
+      { id: 3, name: 'Maine Coon' },
+      { id: 4, name: 'Bengal' },
+      { id: 5, name: 'Sphynx' },
+      { id: 6, name: 'Outro' },
+    ];
     
     return { 
       form, 

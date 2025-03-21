@@ -37,6 +37,10 @@
     noLabel: {
       type: String,
       default: 'Não'
+    },
+    modelValue: {
+      type: Boolean,
+      required: true
     }
   })  
 
