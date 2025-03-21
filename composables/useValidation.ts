@@ -16,7 +16,8 @@ export const useValidation = () => {
     income: '',
     car: true,
     pet: true,
-    petBreed: { id: null, name: '' }
+    petBreed: { id: null, name: '' },
+    other: '',
   });
   
   const nameRegex = helpers.withMessage(
@@ -155,6 +156,9 @@ export const useValidation = () => {
     petBreed: { 
       required: helpers.withMessage('É obrigatório selecionar uma raça', required),
       petBreedRegex
+    },
+    other: {
+      required: helpers.withMessage('É obrigatório digitar a raça do pet', required),
     }
   };
       
@@ -175,7 +179,8 @@ export const useValidation = () => {
     if (form.state) v$.value.state.$touch();
     if (form.neighborhood) v$.value.neighborhood.$touch();
     if (form.address) v$.value.address.$touch();
-    if (form.car) v$.value.car.$touch();    
+    if (form.car) v$.value.car.$touch();  
+    if (form.other) v$.value.other.$touch();    
     v$.value.petBreed.$touch();
   }; 
 

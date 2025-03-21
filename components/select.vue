@@ -1,17 +1,18 @@
 <template>
-  <div class="w-72">
+  <div class="w-full">
     <label 
       :for="id" 
       class="mt-5 block text-sm/6 font-medium text-gray-900">
       {{ label }}
     </label>
     <Listbox 
-    v-model="selectedValue" 
-    :class="['border-1 border-gray-300 rounded-md cursor-pointer', 
-    errorClass]">        
+      v-model="selectedValue">        
       <div class="relative mt-1">
         <ListboxButton
-          class="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-sky-300 sm:text-sm"
+          :class="[
+            'relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:outline-1 focus-visible:ring-white/75 focus-visible:outline-offset-1 focus-visible:ring-offset-sky-300 sm:text-sm',
+            hasError ? 'outline-1 outline-red-500' : errorClass
+          ]"
         >
           <span class="block truncate cursor-pointer">
             {{ selectedValue?.name || 'Selecione uma opção' }}
@@ -31,12 +32,12 @@
           leave-to-class="opacity-0"
         >
           <ListboxOptions
-            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
+            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 focus:outline-none sm:text-sm z-10"
           >
             <ListboxOption
               v-slot="{ active, selected }"
               v-for="option in options"
-              :key="option.name"
+              :key="option.id"
               :value="option"
               as="template"
             >
@@ -66,56 +67,79 @@
         </transition>
       </div>
     </Listbox>
+    
+    <div class="input-errors" v-for="(error, index) in validationErrors" :key="index">
+      <p class="error-msg text-red-500">{{ error }}</p>
+    </div>
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref, watch, computed } from 'vue'
 import {
   Listbox,
-  ListboxLabel,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
 } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
-const props = defineProps({
-  options: {
-    type: Array,
-    required: true,
-    default: () => []
+export default {
+  components: {
+    Listbox,
+    ListboxButton,
+    ListboxOptions,
+    ListboxOption,
+    CheckIcon,
+    ChevronUpDownIcon
   },
-  modelValue: {
-    type: Object,
-    default: () => ({})
+  props: {
+    options: {
+      type: Array,
+      required: true,
+      default: () => []
+    },
+    modelValue: {
+      type: Object,
+      default: () => ({})
+    },
+    label: {
+      type: String,
+      default: 'Selecione uma opção'
+    },
+    id: {
+      type: String,
+      default: 'select-dropdown'
+    },
+    errorClass: {
+      type: String,
+      default: '',
+    },
+    validationErrors: {
+      type: Array,
+      default: () => []
+    }
   },
-  label: {
-    type: String,
-    default: 'Selecione uma opção'
-  },
-  id: {
-    type: String,
-    default: 'select-dropdown'
-  },
-  errorClass: {
-    type: String,
-    default: '',
+  setup(props, { emit }) {
+    const selectedValue = ref(props.modelValue || (props.options.length > 0 ? props.options[0] : {}));
+    
+    const hasError = computed(() => props.validationErrors.length > 0);
+
+    watch(selectedValue, (newValue) => {
+      emit('update:modelValue', newValue);
+      emit('change', newValue);
+    });
+
+    watch(() => props.modelValue, (newValue) => {
+      if (newValue && newValue.id !== selectedValue.value?.id) {
+        selectedValue.value = newValue;
+      }
+    });
+
+    return {
+      selectedValue,
+      hasError
+    };
   }
-})
-
-const emit = defineEmits(['update:modelValue', 'change'])
-
-const selectedValue = ref(props.modelValue || (props.options.length > 0 ? props.options[0] : {}))
-
-watch(selectedValue, (newValue) => {
-  emit('update:modelValue', newValue)
-  emit('change', newValue)
-})
-
-watch(() => props.modelValue, (newValue) => {
-  if (newValue && newValue.id !== selectedValue.value?.id) {
-    selectedValue.value = newValue
-  }
-})
+}
 </script>

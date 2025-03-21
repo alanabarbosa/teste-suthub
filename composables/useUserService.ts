@@ -14,6 +14,7 @@ interface UserForm {
   car: boolean;
   pet: boolean;
   petBreed: { id: number | null, name: string };
+  other: string;
   [key: string]: any;
 }
 
