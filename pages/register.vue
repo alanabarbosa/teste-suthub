@@ -9,7 +9,7 @@
         <Input 
           v-model="form.firstName"
           label="Nome Completo"
-          :validationErrors="v$.firstName.$errors.map(e => e.$message)"
+          :validationErrors="v$.firstName.$errors.map((e: ValidationError) => e.$message)"
           id="firstName"
           :errorClass="v$.firstName.$dirty && !v$.firstName.$errors.length ? 'outline-green-500 rounded-md' : v$.firstName.$errors.length ? 'outline-red-500 rounded-md' : ''"
           placeholder="Digite seu nome completo"
@@ -21,7 +21,7 @@
       <div :class="{ error: v$.cpf.$errors.length }">
         <Input v-model="form.cpf"
             label="CPF"
-            :validationErrors="v$.cpf.$errors.map(e => e.$message)"
+            :validationErrors="v$.cpf.$errors.map((e: ValidationError) => e.$message)"
             id="cpf"
             :errorClass="v$.cpf.$dirty && !v$.cpf.$errors.length ? 'outline-green-500 rounded-md' : v$.cpf.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             placeholder="000.000.000-00"
@@ -33,7 +33,7 @@
       <div :class="{ error: v$.birthDate.$errors.length }">
         <Input v-model="form.birthDate"
             label="Data de Aniversário"
-            :validationErrors="v$.birthDate.$errors.map(e => e.$message)"
+            :validationErrors="v$.birthDate.$errors.map((e: ValidationError) => e.$message)"
             id="birthDate"
             :errorClass="v$.birthDate.$dirty && !v$.birthDate.$errors.length ? 'outline-green-500 rounded-md' : v$.birthDate.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             placeholder="99/99/9999" 
@@ -45,7 +45,7 @@
       <div :class="{ error: v$.phone.$errors.length }">
         <Input v-model="form.phone"
             label="Telefone celular" 
-            :validationErrors="v$.phone.$errors.map(e => e.$message)"
+            :validationErrors="v$.phone.$errors.map((e: ValidationError) => e.$message)"
             id="phone" 
             :errorClass="v$.phone.$dirty && !v$.phone.$errors.length ? 'outline-green-500 rounded-md' : v$.phone.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             placeholder="(00) 00000-0000"
@@ -57,7 +57,7 @@
       <div :class="{ error: v$.postalCode.$errors.length }">
         <Input v-model="form.postalCode"
             label="CEP" 
-            :validationErrors="v$.postalCode.$errors.map(e => e.$message)"
+            :validationErrors="v$.postalCode.$errors.map((e: ValidationError) => e.$message)"
             id="cep" 
             :errorClass="v$.postalCode.$dirty && !v$.postalCode.$errors.length ? 'outline-green-500 rounded-md' : v$.postalCode.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             placeholder="00000-000"
@@ -69,7 +69,7 @@
       <div :class="{ error: v$.address.$errors.length }">
         <Input v-model="form.address"
             label="Endereço" 
-            :validationErrors="v$.address.$errors.map(e => e.$message)"
+            :validationErrors="v$.address.$errors.map((e: ValidationError) => e.$message)"
             id="address" 
             :errorClass="v$.address.$dirty && !v$.address.$errors.length ? 'outline-green-500 rounded-md' : v$.address.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             @input="remove('address')"
@@ -80,7 +80,7 @@
       <div :class="{ error: v$.neighborhood.$errors.length }">
         <Input v-model="form.neighborhood"
             label="Bairro" 
-            :validationErrors="v$.neighborhood.$errors.map(e => e.$message)"
+            :validationErrors="v$.neighborhood.$errors.map((e: ValidationError) => e.$message)"
             id="neighborhood" 
             :errorClass="v$.neighborhood.$dirty && !v$.neighborhood.$errors.length ? 'outline-green-500 rounded-md' : v$.neighborhood.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             @input="remove('neighborhood')"
@@ -91,7 +91,7 @@
       <div :class="{ error: v$.city.$errors.length }">
         <Input v-model="form.city"
             label="Cidade" 
-            :validationErrors="v$.city.$errors.map(e => e.$message)"
+            :validationErrors="v$.city.$errors.map((e: ValidationError) => e.$message)"
             id="city" 
             :errorClass="v$.city.$dirty && !v$.city.$errors.length ? 'outline-green-500 rounded-md' : v$.city.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             @input="remove('city')"
@@ -102,7 +102,7 @@
       <div :class="{ error: v$.state.$errors.length }">
         <Input v-model="form.state"
             label="Estado" 
-            :validationErrors="v$.state.$errors.map(e => e.$message)"
+            :validationErrors="v$.state.$errors.map((e: ValidationError) => e.$message)"
             id="state" 
             :errorClass="v$.state.$dirty && !v$.state.$errors.length ? 'outline-green-500 rounded-md' : v$.state.$errors.length ? 'outline-red-500 rounded-md' : ''"            
             @input="remove('state')"
@@ -117,7 +117,7 @@
             label="Renda Mensal" 
             id="income" 
             :errorClass="v$.income.$dirty && !v$.income.$errors.length ? 'outline-green-500 rounded-md' : v$.income.$errors.length ? 'outline-red-500 rounded-md' : ''"            
-            :validationErrors="v$.income.$errors.map(e => e.$message)"
+            :validationErrors="v$.income.$errors.map((e: ValidationError) => e.$message)"
             placeholder="Digite o sua renda mensal" 
             v-mask="'R$ #######,##'"
             @input="remove('income')"
@@ -131,7 +131,7 @@
             v-model="form.car" 
             label="Possui carro?" 
             id="car"
-            :validationErrors="v$.car.$errors.map(e => e.$message)"
+            :validationErrors="v$.car.$errors.map((e: ValidationError) => e.$message)"
             :errorClass="v$.car.$dirty && !v$.car.$errors.length ? 'ring-2 ring-green-500' : ''"
             @update:modelValue="remove('car')"
           />
@@ -166,7 +166,7 @@
             :options="dogBreed" 
             id="petBreed" 
             v-model="form.petBreed"
-            :validationErrors="v$.petBreed.$errors.map(e => e.$message)"
+            :validationErrors="v$.petBreed.$errors.map((e: ValidationError) => e.$message)"
             :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id && form.petBreed.id > 0 
               ? 'border-1 border-green-500 rounded-md' 
               : ''"
@@ -178,7 +178,7 @@
             :options="catBreed" 
             id="petBreed"
             v-model="form.petBreed"
-            :validationErrors="v$.petBreed.$errors.map(e => e.$message)"
+            :validationErrors="v$.petBreed.$errors.map((e: ValidationError) => e.$message)"
             :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id && form.petBreed.id > 0 
               ? 'border-1 border-green-500 rounded-md' 
               : ''"
@@ -190,14 +190,14 @@
         v-if="form.petBreed.id === 6"
       :class="{ error: v$.other.$errors.length }">
         <Input v-model="form.other"
-            label="Digite o outra raça" 
+            label="Digite outra raça" 
             id="other" 
             :errorClass="v$.other.$dirty && !v$.other.$errors.length ? 'outline-green-500 rounded-md' : v$.other.$errors.length ? 'outline-red-500 rounded-md' : ''"            
-            :validationErrors="v$.other.$errors.map(e => e.$message)"
-            placeholder="Digite o raça do seu pet" 
+            :validationErrors="v$.someField.$errors.map((e: ValidationError) => e.$message)"
+            placeholder="Digite a raça do seu pet" 
             @input="remove('other')"
           />
-      </div> 
+        </div> 
       
         <Button title="Casdastrar" />
     </form>
@@ -214,6 +214,8 @@ import Button from '@/components/button.vue';
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
 import { mask } from 'vue-the-mask';
+import type { ValidationError } from '@/types/vuelidate';
+
 
 export default {
   components: { Input, Toggle, Modal, Select, Button },
@@ -291,7 +293,7 @@ export default {
       fetchAddress, 
       remove: validateField,
       catBreed,
-      dogBreed
+      dogBreed,
     };
   }
 };

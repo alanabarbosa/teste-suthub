@@ -28,7 +28,8 @@
 <script lang="ts">
 import { computed } from 'vue';
 
-export default {
+export default { 
+  
   props: {
     modelValue: String,
     label: String,
