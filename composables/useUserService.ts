@@ -29,16 +29,21 @@ export const useUserService = (form: UserForm, v$?: Ref<any>) => {
    * @returns Objeto com o resultado da operação
    */
   const submitUserData = async (): Promise<ApiResponse> => {    
-    if (v$) {
+    
+    /*if (v$) {
       const isValid = await v$.value.$validate();
       if (!isValid) {
         console.log("Formulário inválido!");
         return { success: false, error: 'Formulário inválido' };
       }
-    }
-    
+    }*/
+      
     try {
       const userData = { ...form };
+
+      if (userData.petBreed && userData.petBreed.id === null) {
+        userData.petBreed.id = 0;
+      }      
       const response = await fetch('https://dummyjson.com/users/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

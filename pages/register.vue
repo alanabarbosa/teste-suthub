@@ -172,7 +172,11 @@
         </div>
       </div>
 
-      <Modal :open="openModal" @close="openModal = false" />
+      <Modal 
+      :open="openModal" 
+      @close="openModal = false"
+      title="Porque nós precisamos dessa informação?"
+      text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
 
       <Toggle v-model="form.pet" label="Espécie do pet?" id="pet" yesLabel="Cão" noLabel="Gato" />
 
@@ -213,11 +217,7 @@
           </div>
         </div>
         
-      <button class="sm:w-full md:w-max lg:w-max col-span-full text-white px-4 rounded-sm 
-        sm:px-8 py-2 sm:py-3 bg-sky-700 cursor-pointer mt-3 mb-3
-        hover:bg-sky-800">
-        Cadastrar
-      </button>
+        <Button title="Casdastrar" />
     </form>
   </div>
 </template>
@@ -228,12 +228,13 @@ import Input from '@/components/Input.vue';
 import Toggle from '@/components/toggle.vue';
 import Modal from '@/components/modal.vue';
 import Select from '@/components/select.vue';
+import Button from '@/components/button.vue';
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
 import { mask } from 'vue-the-mask';
 
 export default {
-  components: { Input, Toggle, Modal, Select },
+  components: { Input, Toggle, Modal, Select, Button },
   directives: { mask },
   setup() {
     const { form, v$, validateField,  } = useValidation();
@@ -245,8 +246,26 @@ export default {
     const { submitUserData } = useUserService(form, v$);
 
     const submitForm = async () => {
+      const isValid = await v$.value.$validate();
+      
+      if (!isValid) {
+        console.log("Formulário inválido! Corrija os campos destacados.");
+        /*Object.keys(v$.value).forEach(key => {
+          if (key[0] !== '$' && v$.value[key].$errors.length > 0) {
+            console.log(`Campo com erro: ${key}`, v$.value[key].$errors);
+          }
+        });*/
+        return false;
+      }
+      
       const result = await submitUserData();
-      return result.success;
+      if (result.success) {
+        console.log("Formulário enviado com sucesso!");
+        return true;
+      } else {
+        console.error("Erro ao enviar o formulário:", result.error);
+        return false;
+      }
     };
 
     const dogBreed = [
@@ -271,6 +290,12 @@ export default {
 
     watch(() => form.pet, () => {
       form.petBreed = { id: null, name: 'Selecione uma opção' };
+    });
+
+    watch(() => form.car, (newValue) => {
+      if (!newValue) {
+        v$.value.car.$touch(); 
+      }
     });
     
     

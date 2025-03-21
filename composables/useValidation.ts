@@ -98,8 +98,12 @@ export const useValidation = () => {
 
   const petBreedRegex = helpers.withMessage(
     'É obrigatório selecionar uma raça válida.',
-    (value: number) => {
-      return value > 1;
+    (value: any) => {
+      // Verifique se value é um objeto e se tem a propriedade id
+      if (value && typeof value === 'object' && 'id' in value) {
+        return value.id > 0; // O id deve ser maior que 0 para ser válido
+      }
+      return false; // Se não tiver o formato esperado, é inválido
     }
   );
   
@@ -171,11 +175,8 @@ export const useValidation = () => {
     if (form.state) v$.value.state.$touch();
     if (form.neighborhood) v$.value.neighborhood.$touch();
     if (form.address) v$.value.address.$touch();
-    if (form.car) v$.value.car.$touch();
-    
-    if (form.petBreed && form.petBreed.id && form.petBreed.id > 0) {
-      v$.value.petBreed.$touch();
-    }
+    if (form.car) v$.value.car.$touch();    
+    v$.value.petBreed.$touch();
   }; 
 
   return {
