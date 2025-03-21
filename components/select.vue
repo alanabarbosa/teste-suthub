@@ -108,13 +108,11 @@ const emit = defineEmits(['update:modelValue', 'change'])
 
 const selectedValue = ref(props.modelValue || (props.options.length > 0 ? props.options[0] : {}))
 
-// Observe as mudanças no valor selecionado e emita eventos
 watch(selectedValue, (newValue) => {
   emit('update:modelValue', newValue)
   emit('change', newValue)
 })
 
-// Sincronize quando o modelValue mudar externamente
 watch(() => props.modelValue, (newValue) => {
   if (newValue && newValue.id !== selectedValue.value?.id) {
     selectedValue.value = newValue

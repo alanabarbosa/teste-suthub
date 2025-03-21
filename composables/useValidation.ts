@@ -149,14 +149,18 @@ export const useValidation = () => {
       carRegex
     },
     petBreed: { 
-      required: helpers.withMessage('Selecione uma opção', required),
+      required: helpers.withMessage('É obrigatório selecionar uma raça', required),
       petBreedRegex
     }
   };
       
   const v$ = useVuelidate(rules, form);
 
-  const validateField = () => {
+  const validateField = (fieldName: string) => {
+    if (fieldName) {
+      v$.value[fieldName].$touch();
+      return;
+    }
     if (form.firstName) v$.value.firstName.$touch();
     if (form.cpf) v$.value.cpf.$touch();
     if (form.birthDate) v$.value.birthDate.$touch();
@@ -168,8 +172,11 @@ export const useValidation = () => {
     if (form.neighborhood) v$.value.neighborhood.$touch();
     if (form.address) v$.value.address.$touch();
     if (form.car) v$.value.car.$touch();
-    if (form.petBreed) v$.value.petBreed.$touch();
-  };  
+    
+    if (form.petBreed && form.petBreed.id && form.petBreed.id > 0) {
+      v$.value.petBreed.$touch();
+    }
+  }; 
 
   return {
     form,

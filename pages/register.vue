@@ -11,7 +11,7 @@
             :errorClass="v$.firstName.$dirty && !v$.firstName.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.firstName.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
             id="firstName" 
             placeholder="Digite seu nome completo" 
-            @input="remove"
+           @input="remove('firstName')"
           />
         <div class="input-errors" v-for="error of v$.firstName.$errors" :key="error.$uid">
           <p class="error-msg text-red-800">{{ error.$message }}</p>
@@ -25,7 +25,7 @@
           id="cpf" 
           placeholder="000.000.000-00"
           v-mask="'###.###.###-##'"
-          @input="remove"
+          @input="remove('cpf')"
         />
         <div class="input-errors" 
         v-for="error of v$.cpf.$errors" 
@@ -41,7 +41,7 @@
           id="birthDate" 
           placeholder="99/99/9999" 
           v-mask="'##/##/####'"
-          @input="remove"
+          @input="remove('birthDate')"
         />
         <div class="input-errors" 
         v-for="error of v$.birthDate.$errors" 
@@ -58,7 +58,7 @@
           :errorClass="v$.phone.$dirty && !v$.phone.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.phone.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
           placeholder="(00) 00000-0000"
           v-mask="'(##) #####-####'"
-          @input="remove"
+          @input="remove('phone')"
         />        
         <div class="input-errors" 
         v-for="error of v$.phone.$errors" 
@@ -88,7 +88,7 @@
           label="Endereço" 
           id="address" 
           :errorClass="v$.address.$dirty && !v$.address.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.address.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
-          @input="remove"
+          @input="remove('address')"
           placeholder="Digite o seu endereço"
         />     
         <div class="input-errors" 
@@ -104,7 +104,7 @@
             id="neighborhood" 
             :errorClass="v$.neighborhood.$dirty && !v$.neighborhood.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.neighborhood.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
             placeholder="Digite o seu bairro" 
-            @input="remove"
+            @input="remove('neighborhood')"
           />
         <div class="input-errors" 
         v-for="error of v$.neighborhood.$errors" 
@@ -119,7 +119,7 @@
             id="city" 
             :errorClass="v$.city.$dirty && !v$.city.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.city.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
             placeholder="Digite o sua cidade" 
-            @input="remove"
+            @input="remove('city')"
           />
         <div class="input-errors" 
         v-for="error of v$.city.$errors" 
@@ -133,7 +133,7 @@
             label="Estado" 
             id="state" 
             :errorClass="v$.state.$dirty && !v$.state.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.state.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
-            @input="remove"
+            @input="remove('state')"
             v-mask="'AA'"
             placeholder="Digite o seu estado"
           />
@@ -151,7 +151,7 @@
             :errorClass="v$.income.$dirty && !v$.income.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.income.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
             placeholder="Digite o sua renda mensal" 
             v-mask="'R$ #######,##'"
-            @input="remove"
+            @input="remove('income')"
           />
         <div class="input-errors" 
         v-for="error of v$.income.$errors" 
@@ -189,6 +189,7 @@
               : v$.petBreed.$dirty && (!form.petBreed || !form.petBreed.id || form.petBreed.id === 0) 
               ? 'border-3 border-red-500 rounded-md' 
               : ''"
+              @change="remove('petBreed')"
             />
             <Select 
               v-if="!form.pet"
@@ -201,6 +202,7 @@
               : v$.petBreed.$dirty && (!form.petBreed || !form.petBreed.id || form.petBreed.id === 0) 
               ? 'border-3 border-red-500 rounded-md' 
               : ''"
+              @change="remove('petBreed')"
             />
           </div>
           <div class="input-errors" 
@@ -268,8 +270,9 @@ export default {
     ];
 
     watch(() => form.pet, () => {
-      form.petBreed = { id: 0, name: 'Selecione uma opção' };
+      form.petBreed = { id: null, name: 'Selecione uma opção' };
     });
+    
     
     return { 
       form, 

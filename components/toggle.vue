@@ -19,7 +19,7 @@
         <span class="text-sm">{{ enabled ? yesLabel : noLabel }}</span>
       </div>
   
-      <input type="hidden" :id="id" :value="enabled ? 1 : 0" name="toggle-value" />
+      <input type="hidden" :id="id" :value="enabled ? yesLabel : noLabel" name="toggle-value" />
     </div>
   </template>
   
