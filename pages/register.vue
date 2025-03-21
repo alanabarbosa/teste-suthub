@@ -265,6 +265,10 @@ export default {
       { id: 5, name: 'Sphynx' },
       { id: 6, name: 'Outro' },
     ];
+
+    watch(() => form.pet, () => {
+      form.petBreed = { id: 0, name: 'Selecione uma opção' };
+    });
     
     return { 
       form, 
