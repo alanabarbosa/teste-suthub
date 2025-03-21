@@ -209,13 +209,7 @@
             <p class="error-msg text-red-800">{{ error.$message }}</p>
           </div>
         </div>
-
-    
-      
-
-
-
-   
+        
       <button class="text-white px-4 rounded-sm 
         sm:px-8 py-2 sm:py-3 bg-sky-700 cursor-pointer mt-3 mb-3
         hover:bg-sky-800">

@@ -12,8 +12,8 @@ interface UserForm {
   state: string;
   income: string;
   car: boolean;
-  pet: number;
-  petBreed: { id: number, name: string};
+  pet: boolean;
+  petBreed: { id: number | null, name: string };
   [key: string]: any;
 }
 
