@@ -9,7 +9,7 @@
           :value="modelValue"  
           :id="id" 
           :class="[baseClass, errorClass]" 
-          @input="$emit('update:modelValue', $event.target.value)"
+          @input="handleInput"
           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
           :placeholder="placeholder"
         >
@@ -27,6 +27,14 @@ export default {
     placeholder: String,
     baseClass: { type: String, default: '' }, 
     errorClass: { type: String, default: '' } 
+  },
+  methods: {
+    handleInput(event: Event) {
+      const target = event.target as HTMLInputElement | null;
+      if (target) {
+        this.$emit('update:modelValue', target.value);
+      }
+    }
   }
 }
 </script>

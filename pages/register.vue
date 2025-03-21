@@ -159,12 +159,16 @@
         </div>
       </div>
 
-      <Toggle v-model="form.car" label="Possui carro?" id="car"/>
-      <a href="#" @click.prevent="openModal = true">Porque precisamos dessa informação?</a>
+      <div class="flex gap-2 justify-between items-center w-100">
+        <Toggle v-model="form.car" label="Possui carro?" id="car"/>
+        <a class="hover:text-cyan-800" href="#" @click.prevent="openModal = true">Porque precisamos dessa informação?</a>
+      </div>
 
       <Modal :open="openModal" @close="openModal = false" />
 
       <Toggle v-model="form.pet" label="Espécie do pet?" id="pet" yesLabel="cão" noLabel="gato"/>
+
+      <Select label="Raça do pet" />
    
       <button class="text-white px-4 rounded-sm 
         sm:px-8 py-2 sm:py-3 bg-sky-700 cursor-pointer mt-3 mb-3
@@ -180,6 +184,7 @@
 import Input from '@/components/Input.vue';
 import Toggle from '@/components/toggle.vue';
 import Modal from '@/components/modal.vue';
+import Select from '@/components/select.vue';
 import { ref } from 'vue';
 import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
@@ -187,7 +192,7 @@ import { required, helpers } from '@vuelidate/validators'
 import {mask} from 'vue-the-mask'
 
 export default {
-  components: { Input, Toggle, Modal },
+  components: { Input, Toggle, Modal, Select },
   directives: {mask},
   setup() {
     const form = reactive({
@@ -395,10 +400,6 @@ export default {
           console.log('Usuário cadastrado com sucesso:', data);
         } else {
           console.error('Erro ao cadastrar o usuário:', response.status);
-        }
-
-        if (!response.ok) {
-          
         }
       } catch (error) {
         console.error('Erro na requisição:', error);
