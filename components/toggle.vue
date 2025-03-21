@@ -63,18 +63,13 @@ export default {
     }
   },
   setup(props, { emit }) {
-    // Criar uma ref local para o estado do toggle
     const enabled = ref(props.modelValue);
-
-    // Verificar se existem erros de validação
     const hasError = computed(() => props.validationErrors.length > 0);
-
-    // Emitir evento quando o valor mudar
+    
     watch(enabled, (newValue) => {
       emit('update:modelValue', newValue);
     });
 
-    // Atualizar o estado local quando o modelValue mudar
     watch(() => props.modelValue, (newValue) => {
       enabled.value = newValue;
     });

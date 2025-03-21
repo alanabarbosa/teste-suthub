@@ -100,11 +100,10 @@ export const useValidation = () => {
   const petBreedRegex = helpers.withMessage(
     'É obrigatório selecionar uma raça válida.',
     (value: any) => {
-      // Verifique se value é um objeto e se tem a propriedade id
       if (value && typeof value === 'object' && 'id' in value) {
-        return value.id > 0; // O id deve ser maior que 0 para ser válido
+        return value.id > 0; 
       }
-      return false; // Se não tiver o formato esperado, é inválido
+      return false;
     }
   );
   
@@ -166,23 +165,19 @@ export const useValidation = () => {
 
   const validateField = (fieldName: string) => {
     if (fieldName) {
-      v$.value[fieldName].$touch();
+      if (v$.value[fieldName]) {
+        v$.value[fieldName].$touch();
+      }
       return;
     }
-    if (form.firstName) v$.value.firstName.$touch();
-    if (form.cpf) v$.value.cpf.$touch();
-    if (form.birthDate) v$.value.birthDate.$touch();
-    if (form.phone) v$.value.phone.$touch();
-    if (form.postalCode) v$.value.postalCode.$touch();
-    if (form.income) v$.value.income.$touch();
-    if (form.city) v$.value.city.$touch();
-    if (form.state) v$.value.state.$touch();
-    if (form.neighborhood) v$.value.neighborhood.$touch();
-    if (form.address) v$.value.address.$touch();
-    if (form.car) v$.value.car.$touch();  
-    if (form.other) v$.value.other.$touch();    
-    v$.value.petBreed.$touch();
-  }; 
+    const fieldsToValidate = Object.keys(rules);
+    
+    fieldsToValidate.forEach(field => {
+      if (field in form && v$.value[field]) {
+        v$.value[field].$touch();
+      }
+    });
+  };
 
   return {
     form,
