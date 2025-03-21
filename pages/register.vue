@@ -183,9 +183,9 @@
               :options="dogBreed" 
               id="petBreed" 
               v-model="form.petBreed"
-              :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id > 0 
+              :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id && form.petBreed.id > 0 
               ? 'border-2 border-green-500 rounded-md' 
-              : v$.petBreed.$dirty && (!form.petBreed || form.petBreed.id === 0) 
+              : v$.petBreed.$dirty && (!form.petBreed || !form.petBreed.id || form.petBreed.id === 0) 
               ? 'border-3 border-red-500 rounded-md' 
               : ''"
             />
@@ -195,14 +195,15 @@
               :options="catBreed" 
               id="petBreed"
               v-model="form.petBreed"
-              :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id > 0 
+              :errorClass="v$.petBreed.$dirty && form.petBreed && form.petBreed.id && form.petBreed.id > 0 
               ? 'border-2 border-green-500 rounded-md' 
-              : v$.petBreed.$dirty && (!form.petBreed || form.petBreed.id === 0) 
+              : v$.petBreed.$dirty && (!form.petBreed || !form.petBreed.id || form.petBreed.id === 0) 
               ? 'border-3 border-red-500 rounded-md' 
               : ''"
             />
           </div>
           <div class="input-errors" 
+            v-if="form.petBreed.id == 0"
             v-for="error of v$.petBreed.$errors" 
             :key="error.$uid">
             <p class="error-msg text-red-800">{{ error.$message }}</p>

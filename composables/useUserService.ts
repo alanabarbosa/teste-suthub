@@ -13,7 +13,7 @@ interface UserForm {
   income: string;
   car: boolean;
   pet: number;
-  petBreed: {};
+  petBreed: { id: number, name: string};
   [key: string]: any;
 }
 

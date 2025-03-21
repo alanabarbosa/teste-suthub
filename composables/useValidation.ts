@@ -16,7 +16,7 @@ export const useValidation = () => {
     income: '',
     car: true,
     pet: true,
-    petBreed: null
+    petBreed: { id: null, name: '' }
   });
   
   const nameRegex = helpers.withMessage(
@@ -96,12 +96,12 @@ export const useValidation = () => {
     (value: boolean) => value === true
   );
 
-  /*const petBreedRegex = helpers.withMessage(
+  const petBreedRegex = helpers.withMessage(
     'É obrigatório selecionar uma raça válida.',
     (value: number) => {
       return value > 1;
     }
-  );*/
+  );
   
 
   // Regras de validação
@@ -150,7 +150,7 @@ export const useValidation = () => {
     },
     petBreed: { 
       required: helpers.withMessage('Selecione uma opção', required),
-      //petBreedRegex
+      petBreedRegex
     }
   };
       
