@@ -40,6 +40,19 @@
     }
   })  
 
-  const enabled = ref(false)
+  const emit = defineEmits(['update:modelValue']);
+
+    // Criar uma ref local para o estado do toggle
+    const enabled = ref(props.modelValue);
+
+    // Emitir evento quando o valor mudar
+    watch(enabled, (newValue) => {
+      emit('update:modelValue', newValue);
+    });
+
+    // Atualizar o estado local quando o modelValue mudar
+    watch(() => props.modelValue, (newValue) => {
+      enabled.value = newValue;
+    });
   </script>
   

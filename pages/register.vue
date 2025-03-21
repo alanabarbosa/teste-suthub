@@ -150,8 +150,7 @@
             :errorClass="v$.income.$dirty && !v$.income.$errors.length ? 'border-2 border-green-500 rounded-md' : v$.income.$errors.length ? 'border-3 border-red-500 rounded-md' : ''"
             placeholder="Digite o sua renda mensal" 
             v-mask="'R$ #######,##'"
-
-             @input="remove"
+            @input="remove"
           />
         <div class="input-errors" 
         v-for="error of v$.income.$errors" 
@@ -167,11 +166,19 @@
 
       <Modal :open="openModal" @close="openModal = false" />
 
-      <Toggle v-model="form.pet" label="Espécie do pet?" id="pet" yesLabel="cão" noLabel="gato"/>
-
+      <Toggle v-model="form.pet" label="Espécie do pet?" id="pet" yesLabel="Cão" noLabel="Gato" />
+      
       <Select 
+        v-if="form.pet"
+        label="Raça do pet" 
+        :options="dogBreed" 
+        v-model="form.petBreed" 
+        id="petBreed" 
+      />
+      <Select 
+          v-if="!form.pet"
           label="Raça do pet" 
-          :options="breedOptions" 
+          :options="catBreed" 
           v-model="form.petBreed" 
           id="petBreed" 
         />
@@ -231,21 +238,21 @@ export default {
       { name: 'Outro' },
     ]
 
-    const breedOptions = computed(() => {
-      return form.pet === 'cão' ? dogBreed : catBreed;
-    });
-    
-    // Quando a espécie do pet muda, reiniciamos a raça selecionada
-    watch(() => form.pet, () => {
-      // Definir o valor inicial da raça baseado na espécie selecionada
-      form.petBreed = breedOptions.value[0].name;
-    });
-    
-    // Inicializar form.petBreed com a primeira raça da lista correspondente
-    if (!form.petBreed) {
-      form.petBreed = breedOptions.value[0].name;
+    if (form.pet === undefined) {
+      form.pet = true; // Por padrão, começa com "Cão"
     }
+    
+    // Limpar a raça quando mudar o tipo de pet
+    const watchPetType = () => {
+      if (form.petBreed) {
+        form.petBreed = null;
+      }
+    };
+    
+    // Observar mudanças no tipo de pet
+    watch(() => form.pet, watchPetType);
 
+    
     return { 
       form, 
       v$, 
@@ -253,7 +260,8 @@ export default {
       openModal, 
       fetchAddress, 
       remove: validateField,
-      breedOptions
+      catBreed,
+      dogBreed
     };
   }
 };

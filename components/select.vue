@@ -98,10 +98,11 @@ const props = defineProps({
   }
 })
 
+
 const emit = defineEmits(['update:modelValue', 'change'])
 
-const selectedValue = ref(props.modelValue || (props.options.length > 0 ? props.options[0] : {}))
-
+//const selectedValue = ref(props.modelValue || (props.options.length > 0 ? props.options[0] : {}))
+/*
 // Atualiza o valor quando o modelValue muda
 watch(() => props.modelValue, (newVal) => {
   if (newVal && Object.keys(newVal).length > 0) {
@@ -143,5 +144,5 @@ onMounted(() => {
       emit('update:modelValue', props.options[0])
     }
   }
-})
+})*/
 </script>
