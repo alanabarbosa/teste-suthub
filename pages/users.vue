@@ -1,18 +1,13 @@
 <template>
   <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
-    <h2>Lista de usuários</h2>
-    <!-- Integra o componente de busca -->
+    <CustomTitle title="Lista de usuários" />
     <Search @search="onSearch" />
-
-    <!-- Exibe uma mensagem enquanto os dados estão sendo carregados -->
     <div v-if="isLoading" class="text-center py-10">
-      <p>Carregando usuários...</p>
+      <Loading />
     </div>
-
-    <!-- Exibe a tabela de usuários com paginação -->
     <div v-else>
+      
       <Table :headers="tableHeaders" :rows="formattedUsers" />
-
       <Pagination 
         :totalItems="totalUsers" 
         :itemsPerPage="itemsPerPage" 
@@ -26,10 +21,10 @@
 <script lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import Table from "@/components/Table.vue";
+import CustomTitle from "@/components/Title.vue";
 import Search from "@/components/Search.vue";
 import Pagination from "@/components/Pagination.vue";
 
-// Definir a interface para o tipo de usuário
 interface User {
   image: string;
   firstName: string;
@@ -37,15 +32,14 @@ interface User {
   birthDate: string;
   gender: string;
   address: {
-    coordinates: { lat: number; lng: number }[];
+    coordinates: { lat: number; lng: number };
   };
 }
 
 export default {
-  components: { Table, Pagination, Search },
+  components: { Table, Pagination, Search, CustomTitle },
 
   setup() {
-    // Cabeçalhos da tabela
     const tableHeaders = [
       'Foto do usuário', 
       'Nome completo', 
@@ -54,22 +48,24 @@ export default {
       'Localização'
     ];
 
-    // Variáveis de estado
     const users = ref<User[]>([]);
     const isLoading = ref(true);
     const totalUsers = ref(0);
     const currentPage = ref(1);
-    const itemsPerPage = ref(10);
-    const searchQuery = ref('');  // Adiciona estado para o valor da busca
+    const itemsPerPage = ref(20);
+    const searchQuery = ref('');
 
     const { fetchUsers, searchUsers } = useUserService();
 
-    // Função para formatar os usuários para a tabela
     const formattedUsers = computed(() =>
       users.value.map(user => ({
         image: user.image,
         fullName: `${user.firstName} ${user.lastName}`,
-        birthDate: user.birthDate,
+        birthDate: new Date(user.birthDate).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        }),
         gender: user.gender == "female" ? "Feminino" : "Masculino",
         location: `<a href="https://www.google.com/maps?q=${user.address.coordinates.lat},${user.address.coordinates.lng}" 
                   target="_blank" 
@@ -78,7 +74,6 @@ export default {
       }))
     );
 
-    // Função para carregar os usuários com paginação
     const loadUsers = async () => {
       isLoading.value = true;
       try {
@@ -99,20 +94,17 @@ export default {
       }
     };
 
-    // Função para manipular a busca de usuários
     const onSearch = (query: string) => {
       searchQuery.value = query;
-      currentPage.value = 1; // Reinicia a página ao fazer uma nova busca
+      currentPage.value = 1; 
       loadUsers();
     };
-
-    // Manipula a mudança de página
+   
     const onPageChange = (page: number) => {
       currentPage.value = page;
       loadUsers();
     };
 
-    // Carrega os usuários ao montar o componente
     onMounted(() => {
       loadUsers();
     });

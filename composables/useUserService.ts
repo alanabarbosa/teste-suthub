@@ -7,10 +7,7 @@ interface User {
   birthDate: string;
   gender: string;
   address: {
-    coordinates: {
-      lat: number;
-      lng: number;
-  };
+      coordinates: { lat: number; lng: number };
   }[];
   tags: string[];
   [key: string]: any;
@@ -76,6 +73,8 @@ export const useUserService = () => {
           data: {
             users: data.users || [],
             total: data.total || 0,
+            skip: 0, // Valor padrão para `skip`
+            limit: data.limit || 10, // Valor padrão para `limit`, caso não seja retornado pela API
           },
         };
       } else {

@@ -15,10 +15,11 @@
     </div>
     
     <div v-if="isLoading" class="text-center py-10">
+        <Loading />
       <p>Carregando receitas...</p>
     </div>
     
-    <div v-else-if="paginatedRecipes.length" class="flex flex-col">
+    <div v-else="paginatedRecipes.length" class="flex flex-col">
       <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div v-for="recipe in paginatedRecipes" :key="recipe.name">
           <Card :recipe="recipe" />
@@ -31,10 +32,6 @@
         :currentPage="currentPage"
         @changePage="onPageChange" 
       />
-    </div>
-    
-    <div v-else class="text-center py-10">
-      <p>Nenhuma receita encontrada. Tente outros filtros.</p>
     </div>
   </div>
 </template>
