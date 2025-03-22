@@ -24,25 +24,25 @@
         <TabPanels class="mt-2">
           <TabPanel
             :class="[
-              'rounded-xl bg-white p-3',
+              'rounded-xl bg-white p-6',
               'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             ]"
           >
             <div class="mb-3">
               <h4 class="cursor-pointer font-medium text-gray-900 mb-2">Ingredientes:</h4>
-              <ul class="list-disc pl-5 mb-3">
+              <ol class="list-decimal pl-5 mb-3">
                 <li v-for="(ing, index) in recipe.ingredients" 
                 :key="index" 
                 class="mb-1 text-sm text-gray-700">
                   {{ ing }}
                 </li>
-              </ul>
+              </ol>
             </div>
           </TabPanel>  
 
           <TabPanel
             :class="[
-              'rounded-xl bg-white p-3',
+              'rounded-xl bg-white p-6',
               'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             ]"
           >
@@ -58,7 +58,7 @@
             </div>
           </TabPanel>  
      
-          <TabPanel :class="['rounded-xl bg-white p-3']">
+          <TabPanel :class="['rounded-xl bg-white p-6']">
             <div class="mb-4 grid gap-2">
                 <p>
                 <strong>Tempo total de preparação: </strong>{{ recipe.prepTimeMinutes + recipe.cookTimeMinutes }} min
@@ -102,7 +102,7 @@
             </TabPanel>
           <TabPanel
             :class="[
-              'rounded-xl bg-white p-3',
+              'rounded-xl bg-white p-6',
               'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             ]"
           >

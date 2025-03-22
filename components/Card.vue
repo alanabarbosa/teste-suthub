@@ -56,7 +56,7 @@
           <div class="relative bg-white rounded-lg shadow-lg max-w-md w-full">
             <img class="rounded-t-lg w-full h-48 object-cover" 
             :src="recipe.image" alt="" />            
-            <DialogTitle as="h3" class="px-6 py-3 text-xl font-semibold text-gray-900">
+            <DialogTitle as="h3" class="px-3 py-3 text-xl font-semibold text-gray-900">
               {{ recipe.name }}
             </DialogTitle>
             <TabNav :recipe="recipe" />            
