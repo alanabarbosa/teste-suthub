@@ -1,15 +1,13 @@
 import { ref } from 'vue';
 
 interface Tag {
-  image: string;
-  name: string;
   tags: string[];
   [key: string]: any;
 }
 
 interface ApiResponse {
   success: boolean;
-  data?: Tag[]; 
+  data?: Tag[] | string[]; 
   error?: string;
 }
 
@@ -29,8 +27,6 @@ export const useTagService = () => {
         const data = await response.json();        
 
         const tags: Tag[] = data.recipes.map((recipe: any) => ({
-          image: recipe.image,
-          name: recipe.name,
           tags: recipe.tags || [],
         }));
         
@@ -52,7 +48,39 @@ export const useTagService = () => {
     }
   };
 
+  /**
+   * Busca apenas as tags disponíveis na API
+   * @returns Objeto com o resultado da operação contendo as tags
+   */
+  const fetchTags = async (): Promise<ApiResponse> => {
+    try {
+      const response = await fetch('https://dummyjson.com/recipes/tags', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Tags disponíveis:', data);
+        return { success: true, data: data };
+      } else {
+        console.error('Erro ao buscar tags:', response.status);
+        return { 
+          success: false, 
+          error: `Erro ao buscar tags: ${response.status}` 
+        };
+      }
+    } catch (error) {
+      console.error('Erro na requisição de tags:', error);
+      return { 
+        success: false, 
+        error: `Erro na requisição: ${error instanceof Error ? error.message : 'Desconhecido'}`
+      };
+    }
+  };
+
   return {
-    submitTagData
+    submitTagData,
+    fetchTags
   };
 };

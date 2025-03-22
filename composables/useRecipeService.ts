@@ -9,33 +9,51 @@ interface Recipe {
 
 interface ApiResponse {
   success: boolean;
-  data?: Recipe[]; // Usando a interface Recipe aqui para tipar os dados
+  data?: {
+    recipes: Recipe[];
+    total: number;
+    skip: number;
+    limit: number;
+  };
   error?: string;
 }
 
 export const useRecipeService = () => {
+  const totalRecipes = ref(0);
+  
   /**
-   * Envia os dados do formulário para API
+   * Busca receitas da API com paginação
+   * @param page Número da página atual
+   * @param limit Quantidade de itens por página
    * @returns Objeto com o resultado da operação
    */
-  const submitRecipeData = async (): Promise<ApiResponse> => {    
-    
+  const fetchRecipes = async (page: number = 1, limit: number = 10): Promise<ApiResponse> => {    
     try {
-      const response = await fetch('https://dummyjson.com/recipes?limit=10', {
+      const skip = (page - 1) * limit;
+      const response = await fetch(`https://dummyjson.com/recipes?limit=${limit}&skip=${skip}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
 
       if (response.ok) {
-        const data = await response.json();        
-  
-        console.log('Receitas pegas:', data);
-        return { success: true, data: data as Recipe[] }; 
+        const data = await response.json();
+        totalRecipes.value = data.total || 0;
+        
+        console.log('Receitas buscadas:', data);
+        return { 
+          success: true, 
+          data: {
+            recipes: data.recipes || [],
+            total: data.total || 0,
+            skip: data.skip || 0,
+            limit: data.limit || 10
+          }
+        };
       } else {
-        console.error('Erro ao pegar as receitas:', response.status);
+        console.error('Erro ao buscar as receitas:', response.status);
         return { 
           success: false, 
-          error: `Erro ao pegar as receitas: ${response.status}` 
+          error: `Erro ao buscar as receitas: ${response.status}` 
         };
       }
     } catch (error) {
@@ -48,6 +66,7 @@ export const useRecipeService = () => {
   };
 
   return {
-    submitRecipeData
+    fetchRecipes,
+    totalRecipes
   };
 };

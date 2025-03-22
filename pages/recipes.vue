@@ -1,54 +1,157 @@
 <template>
-    <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8  lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
-        <h3 class="col-span-full text-2xl font-medium leading-6 text-gray-900">Receitas:</h3>
-      <Title title="Galeria de receitas" />    
-      <Checkbox v-model="isChecked" label="Aceito os termos e condições" />  
-      <div v-if="recipes.length" class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div  v-for="recipe in recipes" :key="recipe.name">            
-            <Card :image="recipe.image" :title="recipe.name" :tags="recipe.tags" />
-        </div>        
-      </div>
-      <div v-else>
-        <p>Carregando receitas...</p>
-      </div>
-    </div>
-  </template>
-  
-  <script lang="ts">
-  import { onMounted, ref } from 'vue';
-  import Title from "@/components/title.vue";
-  import Checkbox from "@/components/checkbox.vue";
-  import Card from "@/components/card.vue";  
-  import { useRecipeService } from '@/composables/useRecipeService';
-  
-  export default {
-    components: { Title, Card, Checkbox },
-  
-    setup() {
-      const recipes = ref<Recipe[]>([]);
-      const { submitRecipeData } = useRecipeService();  
-      const selectedTags = ref<string[]>([]);
+  <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
 
-      const fetchRecipes = async () => {
-        const response = await submitRecipeData();
+    
+    <div v-if="availableTags.length > 0" 
+      class="mb-6 flex items-center gap-4 justify-center">
+      <h3 class="col-span-full text-2xl font-medium leading-6 text-gray-900">
+        Galeria de receitas:
+      </h3>
+      <Title title="Galeria de receitas" />
+      <Checkbox 
+        :tags="availableTags" 
+        v-model="selectedTags" 
+      />
+    </div>
+    
+    <div v-if="isLoading" class="text-center py-10">
+      <p>Carregando receitas...</p>
+    </div>
+    
+    <div v-else-if="paginatedRecipes.length" class="flex flex-col">
+      <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div v-for="recipe in paginatedRecipes" :key="recipe.name">
+          <Card :image="recipe.image" :title="recipe.name" :tags="recipe.tags" />
+        </div>
+      </div>
+      
+      <!-- Paginação -->
+      <Pagination 
+        :totalItems="totalFilteredRecipes" 
+        :itemsPerPage="itemsPerPage" 
+        :currentPage="currentPage"
+        @changePage="onPageChange" 
+      />
+    </div>
+    
+    <div v-else class="text-center py-10">
+      <p>Nenhuma receita encontrada. Tente outros filtros.</p>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { computed, onMounted, ref, watch } from 'vue';
+import Title from "@/components/title.vue";
+import Checkbox from "@/components/checkbox.vue";
+import Pagination from "@/components/Pagination.vue";
+import Card from "@/components/card.vue";
+import { useRecipeService } from '@/composables/useRecipeService';
+import { useTagService } from '@/composables/useTagService';
+
+interface Recipe {
+  image: string;
+  name: string;
+  tags: string[];
+}
+
+export default {
+  components: { Title, Card, Checkbox, Pagination },
+  
+  setup() {
+    const recipes = ref<Recipe[]>([]);
+    const availableTags = ref<string[]>([]);
+    const selectedTags = ref<string[]>([]);
+    const isLoading = ref(true);
+    const totalRecipes = ref(0);
+    const currentPage = ref(1);
+    const itemsPerPage = ref(10);
+    
+    const { fetchRecipes } = useRecipeService();
+    const { fetchTags } = useTagService();
+    
+    // Filtra as receitas com base nas tags selecionadas
+    const filteredRecipes = computed(() => {
+      if (selectedTags.value.length === 0) {
+        return recipes.value;
+      }
+      
+      return recipes.value.filter(recipe => 
+        selectedTags.value.some(tag => recipe.tags.includes(tag))
+      );
+    });
+    
+    // Total de receitas após a filtragem
+    const totalFilteredRecipes = computed(() => {
+      return filteredRecipes.value.length;
+    });
+    
+    // Receitas da página atual
+    const paginatedRecipes = computed(() => {
+      const startIndex = (currentPage.value - 1) * itemsPerPage.value;
+      const endIndex = startIndex + itemsPerPage.value;
+      return filteredRecipes.value.slice(startIndex, endIndex);
+    });
+    
+    // Carrega as receitas
+    const loadRecipes = async () => {
+      isLoading.value = true;
+      try {
+        const response = await fetchRecipes(1, 100); // Busca mais receitas para ter dados suficientes para teste
         if (response.success && response.data) {
           recipes.value = response.data.recipes;
+          totalRecipes.value = response.data.total;
         } else {
           console.error(response.error);
         }
-      };  
-
-      console.log(selectedTags)
-
-      onMounted(() => {
-        fetchRecipes();
-      });
-  
-      return {
-        recipes,
-        selectedTags
-      };
-    },
-  };
-  </script>
-  
+      } catch (error) {
+        console.error("Erro ao carregar receitas:", error);
+      } finally {
+        isLoading.value = false;
+      }
+    };
+    
+    // Carrega as tags disponíveis
+    const loadTags = async () => {
+      try {
+        const response = await fetchTags();
+        if (response.success && response.data) {
+          availableTags.value = response.data as string[];
+        } else {
+          console.error(response.error);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar tags:", error);
+      }
+    };
+    
+    // Manipula a mudança de página
+    const onPageChange = (page: number) => {
+      currentPage.value = page;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    
+    // Reseta a página quando os filtros mudam
+    watch(selectedTags, () => {
+      currentPage.value = 1;
+    });
+    
+    onMounted(() => {
+      Promise.all([loadRecipes(), loadTags()]);
+    });
+    
+    return {
+      recipes,
+      availableTags,
+      selectedTags,
+      filteredRecipes,
+      paginatedRecipes,
+      totalFilteredRecipes,
+      currentPage,
+      itemsPerPage,
+      isLoading,
+      onPageChange
+    };
+  },
+};
+</script>
