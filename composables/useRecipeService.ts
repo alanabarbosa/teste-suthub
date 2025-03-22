@@ -29,7 +29,9 @@ export const useRecipeService = () => {
   const recipes = ref<Recipe[]>([]);
   
   // Função para buscar todas as receitas da API
-  const fetchRecipes = async (page: number = 1, limit: number = 10): Promise<ApiResponse> => {    
+  const fetchRecipes = async (
+    page: number = 1, 
+    limit: number = 10): Promise<ApiResponse> => {    
     try {
       const skip = (page - 1) * limit;
       const response = await fetch(`https://dummyjson.com/recipes?limit=${limit}&skip=${skip}`, {
@@ -65,7 +67,11 @@ export const useRecipeService = () => {
   };
 
   // Função para buscar receitas por tag específica
-  const fetchRecipesByTag = async (tag: string, page: number = 1, limit: number = 10): Promise<ApiResponse> => {
+  const fetchRecipesByTag = async (
+    tag: string, 
+    page: number = 1, 
+    limit: number = 10): 
+    Promise<ApiResponse> => {
     try {
       const skip = (page - 1) * limit;
       const response = await fetch(`https://dummyjson.com/recipes/tag/${tag}?limit=${limit}&skip=${skip}`, {
@@ -74,6 +80,7 @@ export const useRecipeService = () => {
       });
 
       if (response.ok) {
+        console.log("recipes for tag: " + response)
         const data = await response.json();
         return { 
           success: true, 
@@ -99,7 +106,7 @@ export const useRecipeService = () => {
   };
 
   // Função para buscar receitas por múltiplas tags
-  const fetchRecipesByTags = async (tags: string[]): Promise<ApiResponse> => {
+ /* const fetchRecipesByTags = async (tags: string[]): Promise<ApiResponse> => {
     if (tags.length === 0) {
       return fetchRecipes(1, 100); // Se não houver tags, retorna todas as receitas
     }
@@ -149,12 +156,12 @@ export const useRecipeService = () => {
         error: `Erro ao buscar receitas com múltiplas tags: ${error instanceof Error ? error.message : 'Desconhecido'}`
       };
     }
-  };
+  };*/
 
   return {
     fetchRecipes,
     fetchRecipesByTag,
-    fetchRecipesByTags,
+   // fetchRecipesByTags,
     totalRecipes,
     recipes
   };

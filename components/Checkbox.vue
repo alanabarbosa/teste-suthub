@@ -31,7 +31,8 @@
           <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
             <div class="relative gap-8 bg-white p-7
             h-[300px] overflow-y-auto">
-              <div class="flex flex-wrap gap-2 my-4">
+              <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 
+              md:grid-cols-3  gap-2 my-4">
               <div v-for="tag in tags" :key="tag" class="flex items-center">
                 <input
                   type="checkbox"
@@ -40,6 +41,8 @@
                   v-model="selectedTagsInternal"
                   class="w-4 h-4 text-sky-600 border-gray-300 rounded 
                   focus:ring-sky-500"
+                  @change="(e: any) => updateDataAttribute(e, tag)"
+                  :ref="(el: HTMLInputElement | null) => { if (el) itemRefs[tag] = el }"
                 />
                 <label :for="tag" class="ml-2 text-gray-700 dark:text-sky">
                   {{ tag }}
@@ -57,7 +60,8 @@
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
-import { defineProps, defineEmits, ref, watch } from 'vue';
+import { defineProps, defineEmits, ref, watch, nextTick } from 'vue';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 
 const props = defineProps({
   tags: {
@@ -72,14 +76,67 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+const { saveToLocalStorage, getFromLocalStorage } = useLocalStorage();
 
 const selectedTagsInternal = ref<string[]>([]);
+const itemRefs = ref<Record<string, HTMLInputElement>>({});
 
-watch(() => props.modelValue, (newVal) => {
-  selectedTagsInternal.value = [...newVal];
-}, { immediate: true });
 
-watch(selectedTagsInternal, (newVal) => {
-  emit('update:modelValue', newVal);
-});
+const isTagSelected = (tag: string) => {
+  return selectedTagsInternal.value.includes(tag);
+};
+
+
+const updateDataAttribute = (event: Event, tag: string) => {
+  const checkbox = event.target as HTMLInputElement;
+  const isChecked = checkbox.checked;
+
+
+  checkbox.setAttribute('data-id', isChecked.toString());
+
+
+  let storedTags = getFromLocalStorage('selectedTags', [] as string[]);
+
+  if (isChecked) { 
+    if (!storedTags.includes(tag)) {
+      storedTags.push(tag);
+    }
+  } else {
+    storedTags = storedTags.filter((storedTag) => storedTag !== tag);
+  }
+
+  saveToLocalStorage('selectedTags', storedTags);
+};
+
+const updateAllDataAttributes = () => {
+  nextTick(() => {
+    props.tags.forEach(tag => {
+      if (itemRefs.value[tag]) {
+        itemRefs.value[tag].setAttribute('data-id', isTagSelected(tag).toString());
+      }
+    });
+  });
+};
+
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    if (JSON.stringify(newVal) !== JSON.stringify(selectedTagsInternal.value)) {
+      selectedTagsInternal.value = [...newVal];
+      updateAllDataAttributes();
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  selectedTagsInternal,
+  (newVal) => {    
+    if (JSON.stringify(newVal) !== JSON.stringify(props.modelValue)) {
+      emit('update:modelValue', newVal);
+      updateAllDataAttributes();
+    }
+  }
+);
 </script>

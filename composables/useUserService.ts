@@ -7,11 +7,10 @@ interface User {
   birthDate: string;
   gender: string;
   address: {
-      coordinates: { lat: number; lng: number };
-  }[];
-  tags: string[];
-  [key: string]: any;
+    coordinates: { lat: number; lng: number };
+  };
 }
+
 
 interface ApiResponse {
   success: boolean;

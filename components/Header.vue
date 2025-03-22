@@ -12,47 +12,23 @@
       <ul
         :class="{
           hidden: !isMenuOpen,
-          'flex-col flex-wrap justify-end gap-1 bg-sky-800 rounded-lg sm:flex sm:flex-row sm:bg-transparent':
+          'flex-col flex-wrap justify-end gap-3 bg-sky-800 rounded-lg sm:flex sm:flex-row sm:bg-transparent':
             true,
         }"
         class="hidden sm:flex"
       >
-        <li>
+        <li v-for="(link, index) in menuLinks" 
+        :key="index">
           <NuxtLink
-            to="/"
-            class="cursor-pointer hover:bg-sky-400 px-2 py-2 rounded-sm hover:text-stone-950 block"
-            exact-active-class="bg-sky-400 text-gray-900"
+            :to="link.path"
+            class="cursor-pointer hover:bg-sky-800 px-5 py-2 
+            rounded-sm hover:text-text-10 block"
+            exact-active-class="bg-sky-800 text-gray-10"
+            
           >
-            Home
+            {{ link.label }}
           </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink
-            to="/register"
-            class="cursor-pointer hover:bg-sky-400 px-2 py-2 rounded-sm hover:text-stone-950 block"
-            exact-active-class="bg-sky-400 text-gray-900"
-          >
-            Cadastro de usuarios
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink
-            to="/recipes"
-            class="cursor-pointer hover:bg-sky-400 px-2 py-2 rounded-sm hover:text-stone-950 block"
-            exact-active-class="bg-sky-400 text-gray-900"
-          >
-            Galeria de receitas
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink
-            to="/users"
-            class="cursor-pointer hover:bg-sky-400 px-2 py-2 rounded-sm hover:text-stone-950 block"
-            exact-active-class="bg-sky-400 text-gray-900"
-          >
-            Lista de usuarios
-          </NuxtLink>
-        </li>
+        </li>       
       </ul> 
     </nav>
   </header>

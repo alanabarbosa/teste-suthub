@@ -60,46 +60,47 @@
      
           <TabPanel :class="['rounded-xl bg-white p-6']">
             <div class="mb-4 grid gap-2">
-                <p>
+              <p>
                 <strong>Tempo total de preparação: </strong>{{ recipe.prepTimeMinutes + recipe.cookTimeMinutes }} min
                 <font-awesome-icon :icon="['fas', 'clock']" class="text-blue-500 h-6 w-6" />
-                </p>
-                <p>
+              </p>
+              <p>
                 <strong>Porções: </strong>{{ recipe.servings }}
-                <span class="inline-flex">
-                    <font-awesome-icon 
+                <span class="inline-flex flex-wrap">
+                  <font-awesome-icon 
                     v-for="index in recipe.servings" 
                     :key="'portion-' + index" 
                     :icon="['fas', 'pizza-slice']" 
-                    class="text-yellow-500 h-6 w-6 mr-1" 
-                    />
+                    class="text-yellow-500 h-6 w-6 mr-1 mb-1" 
+                  />
                 </span>
-                </p>
-                <p>
+              </p>
+              <p>
                 <strong>Avaliação: </strong>{{ recipe.rating }}/5
-                <span class="inline-flex">
-                    <font-awesome-icon 
+                <span class="inline-flex flex-wrap">
+                  <font-awesome-icon 
                     v-for="index in Math.floor(recipe.rating)" 
                     :key="'star-' + index" 
                     :icon="['fas', 'star']" 
-                    class="text-orange-400 h-6 w-6 mr-1" 
-                    />
-                    <font-awesome-icon 
+                    class="text-orange-400 h-6 w-6 mr-1 mb-1" 
+                  />
+                  <font-awesome-icon 
                     v-if="recipe.rating % 1 >= 0.5" 
                     :icon="['fas', 'star-half-alt']" 
-                    class="text-orange-400 h-6 w-6 mr-1" 
-                    />
-                    <font-awesome-icon 
+                    class="text-orange-400 h-6 w-6 mr-1 mb-1" 
+                  />
+                  <font-awesome-icon 
                     v-for="index in 5 - Math.ceil(recipe.rating)" 
                     :key="'empty-star-' + index"
                     :icon="['far', 'star']" 
-                    class="text-orange-400 h-6 w-6 mr-1" 
-                    />
+                    class="text-orange-400 h-6 w-6 mr-1 mb-1" 
+                  />
                 </span>
-                </p>
-                <p><strong>Dificuldade: </strong>{{ getDifficulty }}</p>
+              </p>
+              <p><strong>Dificuldade: </strong>{{ getDifficulty }}</p>
             </div>
-            </TabPanel>
+          </TabPanel>
+
           <TabPanel
             :class="[
               'rounded-xl bg-white p-6',

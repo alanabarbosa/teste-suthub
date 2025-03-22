@@ -23,5 +23,7 @@ export default defineNuxtConfig({
     }
   },
 
+  
+
   modules: ["@vesp/nuxt-fontawesome"],
 });
