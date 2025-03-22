@@ -1,76 +1,95 @@
 import { ref } from 'vue';
 
-interface UserForm {
+interface User {
+  image: string;
   firstName: string;
-  cpf: string;
+  lastName: string;
   birthDate: string;
-  phone: string;
-  postalCode: string;
-  address: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  income: string;
-  car: boolean;
-  pet: boolean;
-  petBreed: { id: number | null, name: string };
-  other?: string;
+  gender: string;
+  address: {
+    coordinates: {
+      lat: number;
+      lng: number;
+  };
+  }[];
+  tags: string[];
   [key: string]: any;
 }
 
 interface ApiResponse {
   success: boolean;
-  data?: any;
+  data?: {
+    users: User[];
+    total: number;
+    skip: number;
+    limit: number;
+  };
   error?: string;
 }
 
-export const useUserService = (form: UserForm, v$?: Ref<any>) => {
-  /**
-   * Envia os dados do formulário para API
-   * @returns Objeto com o resultado da operação
-   */
-  const submitUserData = async (): Promise<ApiResponse> => {    
-    
-    /*if (v$) {
-      const isValid = await v$.value.$validate();
-      if (!isValid) {
-        console.log("Formulário inválido!");
-        return { success: false, error: 'Formulário inválido' };
-      }
-    }*/
-      
-    try {
-      const userData = { ...form };
+export const useUserService = () => {
+  const totalUsers = ref(0);
+  const users = ref<User[]>([]);
 
-      console.log(userData)
-          
-      const response = await fetch('https://dummyjson.com/users/add', {
-        method: 'POST',
+  // Função para buscar todos os usuários com paginação
+  const fetchUsers = async (page: number = 1, limit: number = 20): Promise<ApiResponse> => {
+    try {
+      const skip = (page - 1) * limit;
+      const response = await fetch(`https://dummyjson.com/users?sortBy=firstName&order=asc&limit=${limit}&skip=${skip}`, {
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Usuário cadastrado com sucesso:', data);
-        return { success: true, data };
-      } else {
-        console.error('Erro ao cadastrar o usuário:', response.status);
-        return { 
-          success: false, 
-          error: `Erro ao cadastrar usuário: ${response.status}` 
+        totalUsers.value = data.total || 0;
+        return {
+          success: true,
+          data: {
+            users: data.users || [],
+            total: data.total || 0,
+            skip: data.skip || 0,
+            limit: data.limit || 10,
+          },
         };
+      } else {
+        return { success: false, error: `Erro ao buscar os usuários: ${response.status}` };
       }
     } catch (error) {
-      console.error('Erro na requisição:', error);
-      return { 
-        success: false, 
-        error: `Erro na requisição: ${error instanceof Error ? error.message : 'Desconhecido'}`
-      };
+      return { success: false, error: `Erro na requisição: ${error instanceof Error ? error.message : 'Desconhecido'}` };
+    }
+  };
+
+  // Função para buscar usuários por nome
+  const searchUsers = async (query: string): Promise<ApiResponse> => {
+    try {
+      const response = await fetch(`https://dummyjson.com/users/search?q=${query}&sortBy=firstName&order=asc`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        totalUsers.value = data.total || 0;
+        return {
+          success: true,
+          data: {
+            users: data.users || [],
+            total: data.total || 0,
+          },
+        };
+      } else {
+        return { success: false, error: `Erro ao buscar os usuários: ${response.status}` };
+      }
+    } catch (error) {
+      return { success: false, error: `Erro na requisição: ${error instanceof Error ? error.message : 'Desconhecido'}` };
     }
   };
 
   return {
-    submitUserData
+    fetchUsers,
+    searchUsers,
+    totalUsers,
+    users,
   };
 };

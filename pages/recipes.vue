@@ -11,6 +11,7 @@
         :tags="availableTags" 
         v-model="selectedTags" 
       />
+      {{ selectedTags }}
     </div>
     
     <div v-if="isLoading" class="text-center py-10">
@@ -71,6 +72,7 @@ export default {
     const totalRecipes = ref(0);
     const currentPage = ref(1);
     const itemsPerPage = ref(10);
+    const allFilteredRecipes = ref<Recipe[]>([]);
     
     const { fetchRecipes } = useRecipeService();
     const { fetchTags } = useTagService();
@@ -81,16 +83,19 @@ export default {
         return recipes.value;
       }
       
+     
+      
       return recipes.value.filter(recipe => 
         selectedTags.value.some(tag => recipe.tags.includes(tag))
       );
     });
+
     
     // Total de receitas após a filtragem
     const totalFilteredRecipes = computed(() => {
       return filteredRecipes.value.length;
-    });
-    
+    });    
+
     // Receitas da página atual
     const paginatedRecipes = computed(() => {
       const startIndex = (currentPage.value - 1) * itemsPerPage.value;
@@ -102,7 +107,7 @@ export default {
     const loadRecipes = async () => {
       isLoading.value = true;
       try {
-        const response = await fetchRecipes(1, 100); // Busca mais receitas para ter dados suficientes para teste
+        const response = await fetchRecipes(1, 100);
         if (response.success && response.data) {
           recipes.value = response.data.recipes;
           totalRecipes.value = response.data.total;

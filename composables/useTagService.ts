@@ -29,8 +29,6 @@ export const useTagService = () => {
         const tags: Tag[] = data.recipes.map((recipe: any) => ({
           tags: recipe.tags || [],
         }));
-        
-        console.log('Tags das receitas:', tags);
         return { success: true, data: tags };
       } else {
         console.error('Erro ao pegar as receitas:', response.status);
@@ -61,7 +59,6 @@ export const useTagService = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Tags disponíveis:', data);
         return { success: true, data: data };
       } else {
         console.error('Erro ao buscar tags:', response.status);

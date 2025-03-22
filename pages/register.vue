@@ -211,10 +211,10 @@
 
 <script lang="ts">
 import Input from '@/components/Input.vue';
-import Toggle from '~/components/Toggle.vue';
-import Modal from '~/components/Modal.vue';
-import Select from '~/components/Select.vue';
-import Button from '~/components/Button.vue';
+import Toggle from '@/components/Toggle.vue';
+import Modal from '@/components/Modal.vue';
+import Select from '@/components/Select.vue';
+import Button from '@/components/Button.vue';
 import ModalConfirmation from '~/components/ModalConfirmation.vue';
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
@@ -230,7 +230,7 @@ export default {
     const openModal = ref(false);
     const successModalOpen = ref(false);
     const { fetchAddress } = useAddress(form, v$);
-    const { submitUserData } = useUserService(form, v$);
+    const { submitUserData } = useRegisterService(form, v$);
 
     const submitForm = async () => {
       const isValid = await v$.value.$validate();

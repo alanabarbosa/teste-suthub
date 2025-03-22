@@ -1,103 +1,132 @@
 <template>
-    <div class="w-full px-4 py-16">
-      <div class="mx-auto w-full max-w-md">
-        <RadioGroup v-model="selected">
-          <RadioGroupLabel class="sr-only">Server size</RadioGroupLabel>
-          <div class="space-y-2">
-            <RadioGroupOption
-              as="template"
-              v-for="plan in plans"
-              :key="plan.name"
-              :value="plan"
-              v-slot="{ active, checked }"
-            >
-              <div
-                :class="[
-                  active
-                    ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300'
-                    : '',
-                  checked ? 'bg-sky-900/75 text-white ' : 'bg-white ',
-                ]"
-                class="relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none"
-              >
-                <div class="flex w-full items-center justify-between">
-                  <div class="flex items-center">
-                    <div class="text-sm">
-                      <RadioGroupLabel
-                        as="p"
-                        :class="checked ? 'text-white' : 'text-gray-900'"
-                        class="font-medium"
-                      >
-                        {{ plan.name }}
-                      </RadioGroupLabel>
-                      <RadioGroupDescription
-                        as="span"
-                        :class="checked ? 'text-sky-100' : 'text-gray-500'"
-                        class="inline"
-                      >
-                        <span> {{ plan.ram }}/{{ plan.cpus }}</span>
-                        <span aria-hidden="true"> &middot; </span>
-                        <span>{{ plan.disk }}</span>
-                      </RadioGroupDescription>
-                    </div>
-                  </div>
-                  <div v-show="checked" class="shrink-0 text-white">
-                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="12"
-                        fill="#fff"
-                        fill-opacity="0.2"
-                      />
-                      <path
-                        d="M7 13l3 3 7-7"
-                        stroke="#fff"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </RadioGroupOption>
-          </div>
-        </RadioGroup>
-      </div>
+  <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
+    <h2>Lista de usuários</h2>
+    <!-- Integra o componente de busca -->
+    <Search @search="onSearch" />
+
+    <!-- Exibe uma mensagem enquanto os dados estão sendo carregados -->
+    <div v-if="isLoading" class="text-center py-10">
+      <p>Carregando usuários...</p>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  import {
-    RadioGroup,
-    RadioGroupLabel,
-    RadioGroupDescription,
-    RadioGroupOption,
-  } from '@headlessui/vue'
-  
-  const plans = [
-    {
-      name: 'Startup',
-      ram: '12GB',
-      cpus: '6 CPUs',
-      disk: '160 GB SSD disk',
-    },
-    {
-      name: 'Business',
-      ram: '16GB',
-      cpus: '8 CPUs',
-      disk: '512 GB SSD disk',
-    },
-    {
-      name: 'Enterprise',
-      ram: '32GB',
-      cpus: '12 CPUs',
-      disk: '1024 GB SSD disk',
-    },
-  ]
-  
-  const selected = ref(plans[0])
-  </script>
-  
+
+    <!-- Exibe a tabela de usuários com paginação -->
+    <div v-else>
+      <Table :headers="tableHeaders" :rows="formattedUsers" />
+
+      <Pagination 
+        :totalItems="totalUsers" 
+        :itemsPerPage="itemsPerPage" 
+        :currentPage="currentPage"
+        @changePage="onPageChange" 
+      />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import Table from "@/components/Table.vue";
+import Search from "@/components/Search.vue";
+import Pagination from "@/components/Pagination.vue";
+
+// Definir a interface para o tipo de usuário
+interface User {
+  image: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  gender: string;
+  address: {
+    coordinates: { lat: number; lng: number }[];
+  };
+}
+
+export default {
+  components: { Table, Pagination, Search },
+
+  setup() {
+    // Cabeçalhos da tabela
+    const tableHeaders = [
+      'Foto do usuário', 
+      'Nome completo', 
+      'Data de nascimento', 
+      'Gênero', 
+      'Localização'
+    ];
+
+    // Variáveis de estado
+    const users = ref<User[]>([]);
+    const isLoading = ref(true);
+    const totalUsers = ref(0);
+    const currentPage = ref(1);
+    const itemsPerPage = ref(10);
+    const searchQuery = ref('');  // Adiciona estado para o valor da busca
+
+    const { fetchUsers, searchUsers } = useUserService();
+
+    // Função para formatar os usuários para a tabela
+    const formattedUsers = computed(() =>
+      users.value.map(user => ({
+        image: user.image,
+        fullName: `${user.firstName} ${user.lastName}`,
+        birthDate: user.birthDate,
+        gender: user.gender == "female" ? "Feminino" : "Masculino",
+        location: `<a href="https://www.google.com/maps?q=${user.address.coordinates.lat},${user.address.coordinates.lng}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="text-blue-600 underline hover:text-blue-800">Exibir a localização</a>`
+      }))
+    );
+
+    // Função para carregar os usuários com paginação
+    const loadUsers = async () => {
+      isLoading.value = true;
+      try {
+        const response = searchQuery.value
+          ? await searchUsers(searchQuery.value)
+          : await fetchUsers(currentPage.value, itemsPerPage.value);
+          
+        if (response.success && response.data) {
+          users.value = response.data.users;
+          totalUsers.value = response.data.total;
+        } else {
+          console.error(response.error);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar usuários:", error);
+      } finally {
+        isLoading.value = false;
+      }
+    };
+
+    // Função para manipular a busca de usuários
+    const onSearch = (query: string) => {
+      searchQuery.value = query;
+      currentPage.value = 1; // Reinicia a página ao fazer uma nova busca
+      loadUsers();
+    };
+
+    // Manipula a mudança de página
+    const onPageChange = (page: number) => {
+      currentPage.value = page;
+      loadUsers();
+    };
+
+    // Carrega os usuários ao montar o componente
+    onMounted(() => {
+      loadUsers();
+    });
+
+    return {
+      tableHeaders,
+      formattedUsers,
+      totalUsers,
+      currentPage,
+      itemsPerPage,
+      isLoading,
+      onPageChange,
+      onSearch
+    };
+  },
+};
+</script>
