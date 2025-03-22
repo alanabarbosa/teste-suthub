@@ -281,8 +281,6 @@ export default {
       form.petBreed = { id: null, name: 'Selecione uma opção' };
     });
 
-    console.log(v$.value.petBreed)
-
     watch(() => form.car, (newValue) => {
       if (!newValue) {
         v$.value.car.$touch(); 
