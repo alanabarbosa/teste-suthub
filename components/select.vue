@@ -10,8 +10,8 @@
       <div class="relative mt-1">
         <ListboxButton
           :class="[
-            'relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left outline-1 -outline-offset-1 outline-gray-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:outline-1 focus-visible:ring-white/75 focus-visible:outline-offset-1 focus-visible:ring-offset-sky-300 sm:text-sm',
-            hasError ? 'outline-1 outline-red-500' : errorClass
+            'relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border-1 -border-offset-1 border-gray-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:border-1 focus-visible:border-white/75 focus-visible:border-offset-1 focus-visible:border-offset-sky-300 sm:text-sm',
+            hasError ? 'border-red-500' : errorClass ? errorClass : 'border-gray-300'  
           ]"
         >
           <span class="block truncate cursor-pointer">

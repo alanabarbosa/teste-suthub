@@ -157,7 +157,10 @@ export const useValidation = () => {
       petBreedRegex
     },
     other: {
-      required: helpers.withMessage('É obrigatório digitar a raça do pet', required),
+      required: helpers.withMessage('Por favor, especifique a raça', (value: string) => {
+        if (form.petBreed.id !== 6) return true;
+        return !!value.trim();
+      })
     }
   };
       

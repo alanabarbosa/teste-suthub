@@ -14,7 +14,7 @@ interface UserForm {
   car: boolean;
   pet: boolean;
   petBreed: { id: number | null, name: string };
-  other: string;
+  other?: string;
   [key: string]: any;
 }
 
@@ -42,9 +42,8 @@ export const useUserService = (form: UserForm, v$?: Ref<any>) => {
     try {
       const userData = { ...form };
 
-      if (userData.petBreed && userData.petBreed.id === null) {
-        userData.petBreed.id = 0;
-      }      
+      console.log('klsdjf')
+          
       const response = await fetch('https://dummyjson.com/users/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

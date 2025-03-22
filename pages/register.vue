@@ -192,8 +192,8 @@
         <Input v-model="form.other"
             label="Digite outra raça" 
             id="other" 
-            :errorClass="v$.other.$dirty && !v$.other.$errors.length ? 'outline-green-500 rounded-md' : v$.other.$errors.length ? 'outline-red-500 rounded-md' : ''"            
-            :validationErrors="v$.someField.$errors.map((e: ValidationError) => e.$message)"
+            :errorClass="v$.other.$dirty && !v$.other.$errors.length ? 'outline-green-500 rounded-md' : v$.other.$errors.length ? 'outline-red-500 rounded-md' : ''"     
+            :validationErrors="v$.other.$errors.map((e: ValidationError) => e.$message)"
             placeholder="Digite a raça do seu pet" 
             @input="remove('other')"
           />
@@ -234,11 +234,12 @@ export default {
       
       if (!isValid) {
         console.log("Formulário inválido! Corrija os campos destacados.");
-        /*Object.keys(v$.value).forEach(key => {
+        Object.keys(v$.value).forEach(key => {
           if (key[0] !== '$' && v$.value[key].$errors.length > 0) {
             console.log(`Campo com erro: ${key}`, v$.value[key].$errors);
           }
-        });*/
+        });
+        console.log(isValid)
         return false;
       }
       
