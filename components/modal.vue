@@ -30,9 +30,9 @@
                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <DialogTitle 
                       as="h3" 
-                      class="text-base font-semibold text-gray-900">{{ title }}</DialogTitle>
+                      class="text-base text-center font-semibold text-gray-900 mt-6">{{ title }}</DialogTitle>
                       <div class="mt-2">
-                        <p class="text-sm text-gray-500">{{ text }}</p>
+                        <p class="text-sm text-center text-gray-500">{{ text }}</p>
                       </div>
                     </div>
                   </div>
@@ -40,7 +40,7 @@
                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">                 
                   <button 
                   type="button" 
-                  class="cursor-pointer mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto" 
+                  class="cursor-pointer mt-3 inline-flex w-full justify-center rounded-md  px-3 py-2 text-sm font-semibold ring-1 shadow-xs ring-gray-300 ring-inset  sm:mt-0 sm:w-auto bg-sky-700 px-4 py-2 text-sm font-medium text-stone-50 hover:bg-sky-800"
                   @click="$emit('close')">Fechar</button>
                 </div>
               </DialogPanel>
@@ -53,6 +53,8 @@
   
   <script setup>
   import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
+  import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
+
   import { ref, defineProps, defineEmits } from 'vue';
   
   const props = defineProps({

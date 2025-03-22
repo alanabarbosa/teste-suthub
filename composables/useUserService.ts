@@ -42,7 +42,7 @@ export const useUserService = (form: UserForm, v$?: Ref<any>) => {
     try {
       const userData = { ...form };
 
-      console.log('klsdjf')
+      console.log(userData)
           
       const response = await fetch('https://dummyjson.com/users/add', {
         method: 'POST',

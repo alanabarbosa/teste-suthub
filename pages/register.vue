@@ -198,7 +198,11 @@
             @input="remove('other')"
           />
         </div> 
-      
+        <ModalConfirmation 
+          :open="successModalOpen"
+          :form="form"
+          @close="successModalOpen = false"
+        />
         <Button title="Casdastrar" />
     </form>
   </div>
@@ -211,6 +215,7 @@ import Toggle from '@/components/toggle.vue';
 import Modal from '@/components/modal.vue';
 import Select from '@/components/select.vue';
 import Button from '@/components/button.vue';
+import ModalConfirmation from '@/components/modalConfirmation.vue';
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
 import { mask } from 'vue-the-mask';
@@ -218,15 +223,13 @@ import type { ValidationError } from '@/types/vuelidate';
 
 
 export default {
-  components: { Input, Toggle, Modal, Select, Button },
+  components: { Input, Toggle, Modal, Select, Button, ModalConfirmation },
   directives: { mask },
   setup() {
     const { form, v$, validateField,  } = useValidation();
-
     const openModal = ref(false);
-
+    const successModalOpen = ref(false);
     const { fetchAddress } = useAddress(form, v$);
-
     const { submitUserData } = useUserService(form, v$);
 
     const submitForm = async () => {
@@ -239,18 +242,19 @@ export default {
             console.log(`Campo com erro: ${key}`, v$.value[key].$errors);
           }
         });
-        console.log(isValid)
         return false;
       }
       
       const result = await submitUserData();
       if (result.success) {
         console.log("Formulário enviado com sucesso!");
+        successModalOpen.value = true;
         return true;
       } else {
         console.error("Erro ao enviar o formulário:", result.error);
         return false;
       }
+      
     };
 
     const dogBreed = [
@@ -295,6 +299,7 @@ export default {
       remove: validateField,
       catBreed,
       dogBreed,
+      successModalOpen
     };
   }
 };
