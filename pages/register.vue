@@ -211,11 +211,11 @@
 
 <script lang="ts">
 import Input from '@/components/Input.vue';
-import Toggle from '@/components/toggle.vue';
-import Modal from '@/components/modal.vue';
-import Select from '@/components/select.vue';
-import Button from '@/components/button.vue';
-import ModalConfirmation from '@/components/modalConfirmation.vue';
+import Toggle from '~/components/Toggle.vue';
+import Modal from '~/components/Modal.vue';
+import Select from '~/components/Select.vue';
+import Button from '~/components/Button.vue';
+import ModalConfirmation from '~/components/ModalConfirmation.vue';
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
 import { mask } from 'vue-the-mask';

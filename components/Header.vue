@@ -60,7 +60,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import MenuMobile from '@/components/menuMobile.vue';
+import MenuMobile from '~/components/MenuMobile.vue';
 
 const isClient = ref<boolean>(false);
 const isMenuOpen = ref<boolean>(false);

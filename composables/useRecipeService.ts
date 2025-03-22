@@ -3,6 +3,12 @@ import { ref } from 'vue';
 interface Recipe {
   image: string;
   name: string;
+  ingredients: [];
+  instructions: [];
+  prepTimeMinutes: number;
+  cookTimeMinutes: number;
+  servings: number;
+  rating: number
   tags: string[];
   [key: string]: any;
 }
@@ -20,7 +26,7 @@ interface ApiResponse {
 
 export const useRecipeService = () => {
   const totalRecipes = ref(0);
-  
+  const recipes = ref<Recipe[]>([]);
   /**
    * Busca receitas da API com paginação
    * @param page Número da página atual
@@ -67,6 +73,7 @@ export const useRecipeService = () => {
 
   return {
     fetchRecipes,
-    totalRecipes
+    totalRecipes,
+    recipes
   };
 };

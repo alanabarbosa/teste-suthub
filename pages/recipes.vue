@@ -1,7 +1,6 @@
 <template>
-  <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
-
-    
+  <div v-if="totalFilteredRecipes" class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container 
+  flex justify-center flex-col mt-8 w-full my-0 mx-auto">    
     <div v-if="availableTags.length > 0" 
       class="mb-6 flex items-center gap-4 justify-center">
       <h3 class="col-span-full text-2xl font-medium leading-6 text-gray-900">
@@ -21,11 +20,10 @@
     <div v-else-if="paginatedRecipes.length" class="flex flex-col">
       <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div v-for="recipe in paginatedRecipes" :key="recipe.name">
-          <Card :image="recipe.image" :title="recipe.name" :tags="recipe.tags" />
+          <Card :recipe="recipe" />
         </div>
-      </div>
-      
-      <!-- Paginação -->
+      </div>      
+   
       <Pagination 
         :totalItems="totalFilteredRecipes" 
         :itemsPerPage="itemsPerPage" 
@@ -42,17 +40,24 @@
 
 <script lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
-import Title from "@/components/title.vue";
-import Checkbox from "@/components/checkbox.vue";
+import Title from "@/components/Title.vue";
+import Checkbox from "@/components/Checkbox.vue";
 import Pagination from "@/components/Pagination.vue";
-import Card from "@/components/card.vue";
+import Card from "@/components/Card.vue";
 import { useRecipeService } from '@/composables/useRecipeService';
 import { useTagService } from '@/composables/useTagService';
 
 interface Recipe {
   image: string;
   name: string;
+  ingredients: string[];
+  instructions: string[];
+  prepTimeMinutes: number;
+  cookTimeMinutes: number;
+  servings: number;
+  rating: number;
   tags: string[];
+  [key: string]: any;
 }
 
 export default {
