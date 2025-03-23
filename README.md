@@ -1,75 +1,64 @@
-# Nuxt Minimal Starter
+# Teste Suthub
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Esta aplicação foi desenvolvida para o teste da **SUTHUB**, onde o objetivo é implementar uma solução web com três páginas principais, cada uma com funcionalidades específicas e integração a uma API pública. As tecnologias utilizadas incluem **Vue 3**, **Nuxt 3**, **Headless UI** e **Docker**. O foco está em usabilidade, organização visual e implementação de validações. A aplicação é containerizada com Docker, garantindo consistência no ambiente de desenvolvimento.
 
-## Setup
+## Tecnologias Utilizadas
 
-Make sure to install dependencies:
+- **Vue 3** (com Composition API)
+- **Nuxt 3**
+- **Headless UI**
+- **TypeScript**
+- **Docker** (para containerização da aplicação)
+- **VeeValidate** (para validações)
+- **Axios** (para chamadas à API DummyJSON)
 
-```bash
-# npm
-npm install
+---
 
-# pnpm
-pnpm install
+## Menu de Navegação
 
-# yarn
-yarn install
+- [Iniciar com Docker](#1-iniciar-com-docker)
+- [Executar Localmente com Vite](#2-executar-localmente-com-vite)
 
-# bun
-bun install
-```
+---
 
-## Development Server
+## Como Executar a Aplicação
 
-Start the development server on `http://localhost:3000`:
+### 1. Iniciar com Docker
 
-```bash
-# npm
-npm run dev
+Você pode rodar a aplicação utilizando Docker, o que facilita a configuração do ambiente. Siga os passos abaixo:
 
-# pnpm
-pnpm dev
+#### Passos para rodar a aplicação com Docker:
 
-# yarn
-yarn dev
+1. **Construir e iniciar a aplicação com Docker Compose:**
+   No diretório raiz do projeto, execute o seguinte comando para construir e iniciar os containers da aplicação:
 
-# bun
-bun run dev
-```
+   ```bash
+   docker-compose up -d --build
 
-## Production
+   ```bash
+   http://localhost:3000
 
-Build the application for production:
 
-```bash
-# npm
-npm run build
+### 2. Executar Localmente 
 
-# pnpm
-pnpm build
+Se preferir executar a aplicação localmente sem Docker, você pode usar Vite para desenvolvimento:
 
-# yarn
-yarn build
+#### Passos para executar a aplicação localmente:
 
-# bun
-bun run build
-```
+1. **Instalar dependências:**
+   No diretório raiz do projeto, instale as dependências usando npm:
 
-Locally preview production build:
+   ```bash
+   npm install
 
-```bash
-# npm
-npm run preview
+2. **Iniciar a aplicação em modo de desenvolvimento:**
+  Para iniciar a aplicação em modo de desenvolvimento, rode o seguinte comando:
 
-# pnpm
-pnpm preview
+   ```bash
+   npm run dev
 
-# yarn
-yarn preview
+3. **Acessar a aplicação:**
+   Abra o navegador e acesse o seguinte endereço:
 
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+   ```bash
+   http://localhost:3000
