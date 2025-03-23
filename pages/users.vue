@@ -5,8 +5,7 @@
     <div v-if="isLoading" class="text-center py-10">
       <Loading />
     </div>
-    <div v-else>
-      
+    <div v-else>      
       <Table :headers="tableHeaders" :rows="formattedUsers" />
       <Pagination 
         :totalItems="totalUsers" 
