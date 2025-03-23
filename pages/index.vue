@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto p-6">
-      <h1 class="text-3xl font-bold underline mb-6">Documentação do Teste SUTHUB</h1>
+      <h1 class="text-3xl font-bold underline mb-6">Documentação do Teste SUTHUB!</h1>
       
       <section class="mb-8">
         <h2 class="text-2xl font-semibold mb-4">Introdução</h2>
