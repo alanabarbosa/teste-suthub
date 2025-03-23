@@ -1,4 +1,3 @@
-// composables/useLocalStorage.ts
 import { useNuxtApp } from '#app';
 
 export const useLocalStorage = () => {
@@ -25,7 +24,6 @@ export const useLocalStorage = () => {
     }
   };
 
-  // Retornando as funções
   return {
     saveToLocalStorage,
     getFromLocalStorage

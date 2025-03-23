@@ -115,7 +115,6 @@ export const useValidation = () => {
   );
   
 
-  // Regras de validação
   const rules = {
     firstName: { 
       required: helpers.withMessage('O campo Nome Completo é obrigatório.', required), 

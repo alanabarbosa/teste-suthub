@@ -25,10 +25,6 @@ interface ApiResponse {
 }
 
 export const useRegisterService = (form: UserForm, v$?: Ref<any>) => {
-  /**
-   * Envia os dados do formulário para API
-   * @returns Objeto com o resultado da operação
-   */
   const submitUserData = async (): Promise<ApiResponse> => {    
     
     /*if (v$) {

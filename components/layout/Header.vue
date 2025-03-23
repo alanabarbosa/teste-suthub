@@ -74,7 +74,6 @@ const setupFavoritesListener = () => {
   });
 };
 
-// Função para monitorar o scroll e fixar o header
 const handleScroll = () => {
   if (window.scrollY > 100) {
     isFixed.value = true;
@@ -91,12 +90,10 @@ onMounted(() => {
   
   setupFavoritesListener();
   
-  // Adiciona o event listener de scroll
   window.addEventListener('scroll', handleScroll);
 });
 
 onBeforeUnmount(() => {
-  // Remove o event listener de scroll ao desmontar o componente
   window.removeEventListener('scroll', handleScroll);
 });
 </script>

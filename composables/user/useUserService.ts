@@ -27,7 +27,6 @@ export const useUserService = () => {
   const totalUsers = ref(0);
   const users = ref<User[]>([]);
 
-  // Função para buscar todos os usuários com paginação
   const fetchUsers = async (page: number = 1, limit: number = 20): Promise<ApiResponse> => {
     try {
       const skip = (page - 1) * limit;
@@ -56,7 +55,6 @@ export const useUserService = () => {
     }
   };
 
-  // Função para buscar usuários por nome
   const searchUsers = async (query: string): Promise<ApiResponse> => {
     try {
       const response = await fetch(`https://dummyjson.com/users/search?q=${query}&sortBy=firstName&order=asc`, {

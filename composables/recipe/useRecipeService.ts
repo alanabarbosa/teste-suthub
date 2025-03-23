@@ -104,63 +104,11 @@ export const useRecipeService = () => {
     }
   };
 
-  // Função para buscar receitas por múltiplas tags
- /* const fetchRecipesByTags = async (tags: string[]): Promise<ApiResponse> => {
-    if (tags.length === 0) {
-      return fetchRecipes(1, 100); // Se não houver tags, retorna todas as receitas
-    }
-    
-    if (tags.length === 1) {
-      return fetchRecipesByTag(tags[0], 1, 100); // Se houver apenas uma tag, usa a API diretamente
-    }
-    
-    try {
-      // Para múltiplas tags, precisamos buscar por cada tag e depois fazer a interseção
-      const tagPromises = tags.map(tag => fetchRecipesByTag(tag, 1, 100));
-      const tagResults = await Promise.all(tagPromises);
-      
-      // Verifica se todas as consultas foram bem-sucedidas
-      if (tagResults.some(result => !result.success)) {
-        const errors = tagResults
-          .filter(result => !result.success)
-          .map(result => result.error)
-          .join(', ');
-        return { success: false, error: `Erro ao buscar receitas: ${errors}` };
-      }
-      
-      // Pega as receitas da primeira tag
-      const firstTagRecipes = tagResults[0].data?.recipes || [];
-      
-      // Encontra a interseção com as receitas das outras tags
-      const recipesWithAllTags = firstTagRecipes.filter(recipe => {
-        // Uma receita só é incluída se estiver presente em todos os resultados de tags
-        return tagResults.every(tagResult => {
-          const tagRecipes = tagResult.data?.recipes || [];
-          return tagRecipes.some(tagRecipe => tagRecipe.id === recipe.id);
-        });
-      });
-      
-      return {
-        success: true,
-        data: {
-          recipes: recipesWithAllTags,
-          total: recipesWithAllTags.length,
-          skip: 0,
-          limit: recipesWithAllTags.length
-        }
-      };
-    } catch (error) {
-      return { 
-        success: false, 
-        error: `Erro ao buscar receitas com múltiplas tags: ${error instanceof Error ? error.message : 'Desconhecido'}`
-      };
-    }
-  };*/
+ 
 
   return {
     fetchRecipes,
     fetchRecipesByTag,
-   // fetchRecipesByTags,
     totalRecipes,
     recipes
   };

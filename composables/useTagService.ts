@@ -12,10 +12,6 @@ interface ApiResponse {
 }
 
 export const useTagService = () => {
-  /**
-   * Envia os dados do formulário para API
-   * @returns Objeto com o resultado da operação
-   */
   const submitTagData = async (): Promise<ApiResponse> => {    
     try {
       const response = await fetch('https://dummyjson.com/recipes', {
@@ -46,10 +42,7 @@ export const useTagService = () => {
     }
   };
 
-  /**
-   * Busca apenas as tags disponíveis na API
-   * @returns Objeto com o resultado da operação contendo as tags
-   */
+  
   const fetchTags = async (): Promise<ApiResponse> => {
     try {
       const response = await fetch('https://dummyjson.com/recipes/tags', {
