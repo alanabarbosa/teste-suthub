@@ -1,19 +1,19 @@
 <template>
-  <div class="max-w-sm sm:h-[auto] lg:h-[600px] xl:h-[650px] 
+  <div class="max-w-sm sm:h-[auto]
 
   border border-sky-200 rounded-lg 
   shadow-sm bg-sky-800 dark:border-sky-700">
     <img class="rounded-t-lg" 
     :src="recipe.image" alt="" />
     <div class="p-5 grid gap-5">
-      <a href="#" class="h-[50px]">
+      <a href="#">
         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 
         dark:text-white">
           {{ recipe.name }}
         </h5>
       </a>
 
-      <ul class="h-[80px] mv:h-[500px] lg:h-[150px] xl:h-[100px] mb-3
+      <ul class="h-[80px] mb-3
       flex gap-2 items-center flex-wrap 
       font-normal text-gray-900 dark:text-white mb-5">
         Tags: 
