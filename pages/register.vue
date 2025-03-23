@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
+  <div class="slide-top px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container flex justify-center flex-col mt-8 w-full my-0 mx-auto">
     <h2 class="text-base/11 font-semibold text-gray-900">
       Cadastro de Usuário
     </h2>

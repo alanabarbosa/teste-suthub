@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-auto">
+  <div class="slide-top  overflow-x-auto">
     <table class="min-w-full table-auto bg-white shadow-lg rounded-lg">
       <thead>
         <tr class="bg-gray-200 text-gray-700">
