@@ -41,8 +41,6 @@ export const useRegisterService = (form: UserForm, v$?: Ref<any>) => {
       
     try {
       const userData = { ...form };
-
-      console.log(userData)
           
       const response = await fetch('https://dummyjson.com/users/add', {
         method: 'POST',
@@ -65,13 +63,13 @@ export const useRegisterService = (form: UserForm, v$?: Ref<any>) => {
       console.error('Erro na requisição:', error);
       return { 
         success: false, 
-        error: `Erro na requisição: ${error instanceof Error ? error.message : 'Desconhecido'}`
+        error: `Erro na requisição: ${error instanceof 
+          Error ? error.message : 'Desconhecido'}`
       };
     }
   };
 
   const resetForm = () => {
-    // Resetar todos os campos para valores padrão
     Object.keys(form).forEach(key => {
       if (key === 'car') {
         form[key] = false;
@@ -84,7 +82,6 @@ export const useRegisterService = (form: UserForm, v$?: Ref<any>) => {
       }
     });
 
-    // Se existir validador, resete todas as validações
     if (v$ && v$.value) {
       v$.value.$reset();
     }

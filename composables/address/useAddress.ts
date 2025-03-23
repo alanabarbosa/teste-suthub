@@ -6,6 +6,7 @@ interface UserForm {
   neighborhood: string;
   city: string;
   state: string;
+  postalCodeNotFound?: boolean;
   [key: string]: any;
 }
 
@@ -23,7 +24,7 @@ interface ViaCEPResponse {
   erro?: boolean;
 }
 
-export const useAddress = (form: UserForm, v$?: Ref<any>) => {
+export const useAddress = (form: UserForm, v$?: Ref<any>, setPostalCodeNotFound?: (notFound: boolean) => void) => {
   /**
    * Busca o endereço a partir do CEP informado
    * @param event Evento do input ou valor do CEP
@@ -32,6 +33,12 @@ export const useAddress = (form: UserForm, v$?: Ref<any>) => {
     const postalCode = typeof event === 'string' 
       ? event 
       : (event.target as HTMLInputElement).value;
+    
+    if (setPostalCodeNotFound) {
+      setPostalCodeNotFound(false);
+    } else if ('postalCodeNotFound' in form) {
+      form.postalCodeNotFound = false;
+    }
     
     const postCodeClean = postalCode.replace("-", "");
     
@@ -60,6 +67,17 @@ export const useAddress = (form: UserForm, v$?: Ref<any>) => {
             return { success: true, data };
           } else {
             console.error('CEP não encontrado na base de dados');
+            
+            if (setPostalCodeNotFound) {
+              setPostalCodeNotFound(true);
+            } else if ('postalCodeNotFound' in form) {
+              form.postalCodeNotFound = true;
+            }
+            
+            if (v$) {
+              v$.value.postalCode.$touch();
+            }
+            
             return { success: false, error: 'CEP não encontrado' };
           }
         } else {
@@ -74,7 +92,7 @@ export const useAddress = (form: UserForm, v$?: Ref<any>) => {
     
     return { success: false, error: 'CEP inválido' };
   };
-
+  
   return {
     fetchAddress
   };

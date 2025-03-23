@@ -18,6 +18,8 @@ export const useValidation = () => {
     pet: true,
     petBreed: { id: null, name: '' },
     other: '',
+
+    postalCodeNotFound: false,
   });
   
   const nameRegex = helpers.withMessage(
@@ -79,6 +81,11 @@ export const useValidation = () => {
     }
   ); 
 
+  const postalCodeExists = helpers.withMessage(
+    'CEP não encontrado na base de dados',
+    (value: string) => !form.postalCodeNotFound
+  );
+
   const incomeRegex = helpers.withMessage(
     'Valor mínimo permitido R$ 1000,00',
     (value: string) => {
@@ -129,7 +136,8 @@ export const useValidation = () => {
     },
     postalCode: { 
       required: helpers.withMessage('O CEP é obrigatório.', required),
-      postalRegex
+      postalRegex,
+      postalCodeExists
     },
     income: { 
       required: helpers.withMessage('A renda mensal é obrigatória.', required),
@@ -182,9 +190,17 @@ export const useValidation = () => {
     });
   };
 
+  const setPostalCodeNotFound = (notFound: boolean) => {
+    form.postalCodeNotFound = notFound;
+    if (notFound) {
+      v$.value.postalCode.$touch();
+    }
+  };  
+
   return {
     form,
     v$,
     validateField,
+    setPostalCodeNotFound
   }
 };

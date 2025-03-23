@@ -11,7 +11,7 @@
         <ListboxButton
           :class="[
             'relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border-1 -border-offset-1 border-gray-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:border-1 focus-visible:border-white/75 focus-visible:border-offset-1 focus-visible:border-offset-sky-300 sm:text-sm',
-            hasError ? 'border-red-500' : errorClass ? errorClass : 'border-gray-300'  
+            hasError ? 'border border-red-500' : errorClass ? errorClass : 'border-gray-300'  
           ]"
         >
           <span class="block truncate cursor-pointer">
