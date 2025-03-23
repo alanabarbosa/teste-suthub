@@ -1,5 +1,3 @@
-import { defineNuxtConfig } from 'nuxt/config';
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
@@ -7,10 +5,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@vesp/nuxt-fontawesome',
   ],
-  tailwindcss: {
-    cssPath: '~/assets/css/main.css',
-    configPath: 'tailwind.config.js',
-  },
   plugins: [
     '@/plugins/mask',
   ],
