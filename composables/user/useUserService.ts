@@ -72,8 +72,8 @@ export const useUserService = () => {
           data: {
             users: data.users || [],
             total: data.total || 0,
-            skip: 0, // Valor padrão para `skip`
-            limit: data.limit || 10, // Valor padrão para `limit`, caso não seja retornado pela API
+            skip: 0,
+            limit: data.limit || 10,
           },
         };
       } else {

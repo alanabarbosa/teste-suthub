@@ -35,16 +35,14 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, inject, watch, computed } from "vue";
-import MenuMobile from '~/components/MenuMobile.vue';
+import MenuMobile from '~/components/layout/MenuMobile.vue';
 
 const isClient = ref<boolean>(false);
 const isMenuOpen = ref<boolean>(false);
 const { getFromLocalStorage } = useLocalStorage();
 
-// Referência para a contagem de favoritos
 const favoritesCount = ref<number>(0);
 
-// Links do menu como um computed property para atualização reativa
 const menuLinks = computed(() => [
   { path: '/', label: 'Home' },
   { path: '/register', label: 'Cadastro de usuários' },
@@ -53,7 +51,6 @@ const menuLinks = computed(() => [
   { path: '/favorites', label: `Receitas favoritas (${favoritesCount.value})` },
 ]);
 
-// Função para obter a contagem de favoritos do localStorage
 const getFavoritesCount = () => {
   try {
     const favorites = JSON.parse(getFromLocalStorage("recipesFavorites", "[]"));
@@ -64,22 +61,18 @@ const getFavoritesCount = () => {
   }
 };
 
-// Função que escuta as mudanças nos favoritos usando um evento personalizado
 const setupFavoritesListener = () => {
   window.addEventListener('favorites-updated', () => {
     favoritesCount.value = getFavoritesCount();
   });
 };
 
-// Inicialização ao montar o componente
 onMounted(() => {
   isClient.value = true;
   isMenuOpen.value = false;
   
-  // Configura a contagem inicial de favoritos
   favoritesCount.value = getFavoritesCount();
   
-  // Configura o ouvinte de eventos para atualizações
   setupFavoritesListener();
 });
 </script>

@@ -21,7 +21,6 @@ export const useRecipeFavoritesService = () => {
 
   const fetchRecipesFavorites = async () => {    
     try {
-      // Atualiza os favoritos do localStorage antes de buscar
       favorites.value = JSON.parse(getFromLocalStorage("recipesFavorites", "[]"));
       
       const recipeData = await Promise.all(
@@ -41,7 +40,6 @@ export const useRecipeFavoritesService = () => {
         })
       );
       
-      // Remove valores nulos e armazena as receitas
       favoriteRecipes.value = recipeData.filter(recipe => recipe !== null);
       totalRecipes.value = favoriteRecipes.value.length;
       
@@ -50,21 +48,17 @@ export const useRecipeFavoritesService = () => {
     }
   };
 
-  // Função para atualizar a lista quando os favoritos mudam
   const updateFavoritesFromLocalStorage = () => {
     const currentFavorites = JSON.parse(getFromLocalStorage("recipesFavorites", "[]"));
-    // Filtra as receitas que não estão mais nos favoritos
     favoriteRecipes.value = favoriteRecipes.value.filter(recipe => 
       currentFavorites.includes(recipe.id)
     );
     totalRecipes.value = favoriteRecipes.value.length;
   };
 
-  // Setup para adicionar e remover o listener de eventos
   const setupFavoritesListener = () => {
     window.addEventListener('favorites-updated', updateFavoritesFromLocalStorage);
     
-    // Retorna uma função para remover o listener quando o componente for desmontado
     return () => {
       window.removeEventListener('favorites-updated', updateFavoritesFromLocalStorage);
     };

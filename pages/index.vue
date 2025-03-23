@@ -5,7 +5,7 @@
       <section class="mb-8">
         <h2 class="text-2xl font-semibold mb-4">Introdução</h2>
         <p class="text-base leading-relaxed">
-          Esta aplicação foi desenvolvida para o teste da SUTHUB, cujo objetivo é implementar uma solução web com três páginas principais, cada uma com funcionalidades específicas e integração a uma API pública. As tecnologias utilizadas incluem Vue 3, Nuxt 3, e Headless UI, com foco em usabilidade, organização visual e implementação de validações eficientes. A seguir, descrevo as principais funcionalidades implementadas e suas características.
+          Esta aplicação foi desenvolvida para o teste da SUTHUB, onde objetivo é implementar uma solução web com três páginas principais, cada uma com funcionalidades específicas e integração a uma API pública. As tecnologias utilizadas incluem Vue 3, Nuxt 3, e Headless UI, com foco em usabilidade, organização visual e implementação de validações. A seguir, descrevo as principais funcionalidades implementadas e suas características.
         </p>
       </section>
   
@@ -57,6 +57,34 @@
           <li>Paginação implementada para exibir 20 usuários por página.</li>
         </ul>
       </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Implementações adicionais:</h2>
+        <h2 class="text-2xl font-semibold mb-4">Página 4: Favoritos</h2>
+        <p class="text-base leading-relaxed mb-4">
+          A página de favoritos permite ao usuário salvar receitas e acessá-las facilmente posteriormente. As receitas favoritas são armazenadas localmente no browser, utilizando o LocalStorage.
+        </p>
+        <h3 class="text-xl font-semibold mb-2">Funcionalidades:</h3>
+        <ul class="list-disc ml-6 space-y-2 text-base">
+          <li>Exibe uma lista das receitas marcadas como favoritas pelo usuário.</li>
+          <li>Permite remover receitas dos favoritos com um único clique.</li>
+          <li>As receitas favoritas são salvas no LocalStorage, garantindo que estejam disponíveis mesmo após o fechamento da página.</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Docker e Integração</h2>
+        <p class="text-base leading-relaxed mb-4">
+          A aplicação foi integrada com Docker de forma simples, facilitando o processo de desenvolvimento e deployment. O uso de containers Docker permite garantir um ambiente consistente, independentemente do sistema operacional ou máquina onde a aplicação é executada.
+        </p>
+        <h3 class="text-xl font-semibold mb-2">Funcionalidades:</h3>
+        <ul class="list-disc ml-6 space-y-2 text-base">
+          <li>Configuração simples de Dockerfile para gerar a imagem da aplicação com todas as dependências necessárias.</li>
+          <li>Uso básico de docker-compose para orquestrar o serviço da aplicação.</li>
+          <li>Ambiente isolado para desenvolvimento, garantindo consistência entre as versões da aplicação.</li>
+        </ul>
+      </section>
+     
   
       <section class="mb-8">
         <h2 class="text-2xl font-semibold mb-4">Considerações Finais</h2>

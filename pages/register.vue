@@ -209,16 +209,17 @@
 
 
 <script lang="ts">
-import Input from '@/components/Input.vue';
-import Toggle from '@/components/Toggle.vue';
-import Modal from '@/components/Modal.vue';
-import Select from '@/components/Select.vue';
-import Button from '@/components/Button.vue';
-import ModalConfirmation from '~/components/ModalConfirmation.vue';
+import Input from '@/components/form/Input.vue';
+import Toggle from '@/components/form/Toggle.vue';
+import Modal from '@/components/modal/Modal.vue';
+import Select from '@/components/form/Select.vue';
+import Button from '@/components/ui/Button.vue';
+import ModalConfirmation from '@/components/modal/ModalConfirmation.vue';
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
 import { mask } from 'vue-the-mask';
-import type { ValidationError } from '@/types/vuelidate';
+import { useAddress } from '@/composables/address/useAddress';
+import { useRegisterService } from '@/composables/user/useRegisterService';
 
 
 export default {

@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import Heart from "@/components/Heart.vue";
+  import Heart from "~/components/ui/Heart.vue";
 
   interface Recipe {
     image: string;

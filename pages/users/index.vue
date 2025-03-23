@@ -19,10 +19,12 @@
 
 <script lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import Table from "@/components/Table.vue";
-import CustomTitle from "@/components/Title.vue";
-import Search from "@/components/Search.vue";
-import Pagination from "@/components/Pagination.vue";
+import Table from "@/components/ui/Table.vue";
+import CustomTitle from "@/components/ui/Title.vue";
+import Search from "@/components/form/Search.vue";
+import Pagination from "@/components/ui/Pagination.vue";
+import { useUserService } from '@/composables/user/useUserService';
+
 
 interface User {
   image: string;

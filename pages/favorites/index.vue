@@ -34,10 +34,10 @@
   
   <script lang="ts" setup>
   import { ref, onMounted, onUnmounted } from 'vue';
-  import CustomTitle from "@/components/Title.vue";
-  import Card from "@/components/Card.vue";
-  import Loading from "@/components/Loading.vue";
-  import { useRecipeFavoritesService } from '@/composables/useRecipeFavoritesService';
+  import CustomTitle from "~/components/ui/Title.vue";
+  import Card from "~/components/ui/Card.vue";
+  import Loading from "~/components/ui/Loading.vue";
+  import { useRecipeFavoritesService } from '~/composables/recipe/useRecipeFavoritesService';
   
   const { fetchRecipesFavorites, favoriteRecipes, totalRecipes, setupFavoritesListener } = useRecipeFavoritesService();
   const { saveToLocalStorage, getFromLocalStorage } = useLocalStorage();

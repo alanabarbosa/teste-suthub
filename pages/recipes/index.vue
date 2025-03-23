@@ -32,12 +32,12 @@
 
 <script lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
-import CustomTitle from "@/components/Title.vue";
-import Checkbox from "@/components/Checkbox.vue";
-import Pagination from "@/components/Pagination.vue";
-import Card from "@/components/Card.vue";
-import Loading from "@/components/Loading.vue";
-import { useRecipeService } from '@/composables/useRecipeService';
+import CustomTitle from "~/components/ui/Title.vue";
+import Checkbox from "~/components/form/Checkbox.vue";
+import Pagination from "~/components/ui/Pagination.vue";
+import Card from "~/components/ui/Card.vue";
+import Loading from "~/components/ui/Loading.vue";
+import { useRecipeService } from '~/composables/recipe/useRecipeService';
 import { useTagService } from '@/composables/useTagService';
 
 interface Recipe {

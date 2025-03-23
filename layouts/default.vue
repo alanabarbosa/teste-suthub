@@ -1,17 +1,22 @@
 <template>
+  <div class="flex flex-col min-h-screen">
     <Header />
-    <main class="min-h-screen flex flex-col justify-between bg-sky-100">
+    <main class="flex-grow bg-sky-100">
       <NuxtPage />
     </main>
     <Footer />
-  </template>
-  
-  <script lang="ts">
-  import Header from "../components/Header.vue";
-  import Footer from "../components/Footer.vue";
-  
-  export default {
-    name: 'Layout'
-  };
-  </script>
-  
+  </div>
+</template>
+
+<script lang="ts">
+import Header from "@/components/layout/Header.vue";
+import Footer from "@/components/layout/Footer.vue";
+
+export default {
+  name: 'Layout',
+  components: {
+    Header,
+    Footer,
+  },
+};
+</script>

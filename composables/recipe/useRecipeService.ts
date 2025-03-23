@@ -29,7 +29,6 @@ export const useRecipeService = () => {
   const totalRecipes = ref(0);
   const recipes = ref<Recipe[]>([]);
   
-  // Função para buscar todas as receitas da API
   const fetchRecipes = async (
     page: number = 1, 
     limit: number = 10): Promise<ApiResponse> => {    
@@ -67,7 +66,6 @@ export const useRecipeService = () => {
     }
   };
 
-  // Função para buscar receitas por tag específica
   const fetchRecipesByTag = async (
     tag: string, 
     page: number = 1, 
