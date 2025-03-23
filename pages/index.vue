@@ -10,7 +10,14 @@
       </section>
   
       <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Página 1: Cadastro de Usuário</h2>
+        <h2 class="text-2xl font-semibold mb-4">
+          <NuxtLink to="/register" class="flex items-center gap-2 text-blue-500 hover:underline">
+            <img src="@/assets/images/link.svg" 
+            width="30" 
+            alt="link para página cadastro de usuário" />
+            Página 1: Cadastro de Usuário
+          </NuxtLink>
+        </h2>
         <ul class="list-disc ml-6 space-y-2 text-base">
           <li><strong>Nome Completo:</strong> Deve conter pelo menos duas palavras.</li>
           <li><strong>CPF:</strong> Validação com base nas regras oficiais brasileiras, com máscara automática de pontuação.</li>
@@ -24,7 +31,14 @@
       </section>
   
       <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Página 2: Galeria de Receitas e Busca por Tags</h2>
+        <h2 class="text-2xl font-semibold mb-4">
+          <NuxtLink to="/recipes" class="flex items-center gap-2 text-blue-500 hover:underline">
+            <img src="@/assets/images/link.svg" 
+            width="30" 
+            alt="link para página galeria de receitas" />
+            Página 2: Galeria de Receitas e Busca por Tags
+          </NuxtLink>
+        </h2>
         <p class="text-base leading-relaxed mb-4">
           A página de galeria de receitas permite visualizar e filtrar receitas obtidas da API pública de receitas.
         </p>
@@ -32,8 +46,9 @@
         <ul class="list-disc ml-6 space-y-2 text-base">
           <li>Exibe uma galeria de receitas, mostrando imagem, nome e tags das receitas.</li>
           <li>Permite selecionar múltiplas tags para filtrar receitas por categorias específicas.</li>
-          <li>Inclui uma busca funcional por tags, com as tags organizadas em ordem alfabética.</li>
-          <li>Apresenta os detalhes da receita em uma modal ou nova página.</li>
+          <li>Inclui uma busca funcional por tags.</li>
+          <li>Apresenta os detalhes da receita em uma modal.</li>
+          <li>Permite limpar todos os filtros de uma só vez.</li>
         </ul>
       </section>
   
@@ -45,7 +60,14 @@
       </section>
   
       <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Página 3: Lista e Busca de Usuários</h2>
+        <h2 class="text-2xl font-semibold mb-4">
+          <NuxtLink to="/users" class="flex items-center gap-2 text-blue-500 hover:underline">
+            <img src="@/assets/images/link.svg" 
+            width="30" 
+            alt="link para página galeria de lista de usuários" />
+            Página 3: Lista e Busca de Usuários
+          </NuxtLink>
+        </h2>
         <p class="text-base leading-relaxed mb-4">
           Essa página exibe uma lista de usuários obtidos da API pública de usuários, com uma lógica de paginação e busca por nome.
         </p>
@@ -60,7 +82,14 @@
 
       <section class="mb-8">
         <h2 class="text-2xl font-semibold mb-4">Implementações adicionais:</h2>
-        <h2 class="text-2xl font-semibold mb-4">Página 4: Favoritos</h2>
+        <h2 class="text-2xl font-semibold mb-4">
+          <NuxtLink to="/favorites" class="flex items-center gap-2 text-blue-500 hover:underline">
+            <img src="@/assets/images/link.svg" 
+            width="30" 
+            alt="link para página galeria de favoritos" />
+            Página 4: Favoritos
+          </NuxtLink>
+        </h2>
         <p class="text-base leading-relaxed mb-4">
           A página de favoritos permite ao usuário salvar receitas e acessá-las facilmente posteriormente. As receitas favoritas são armazenadas localmente no browser, utilizando o LocalStorage.
         </p>
@@ -88,9 +117,7 @@
   
       <section class="mb-8">
         <h2 class="text-2xl font-semibold mb-4">Considerações Finais</h2>
-        <p class="text-base leading-relaxed">
-          A aplicação foi desenvolvida com foco em usabilidade e na correta validação e exibição de dados. A integração com APIs públicas foi implementada para garantir a robustez do sistema, e a interface foi construída utilizando o Headless UI para proporcionar uma experiência de usuário agradável e moderna.
-        </p>
+        <p>A aplicação foi feita pensando na facilidade de uso e na exibição correta dos dados. A integração com a API pública <NuxtLink to="https://dummyjson.com/docs" class="text-blue-500 hover:underline" target="_blank">https://dummyjson.com</NuxtLink> ajuda a deixar o sistema bem robusto, e a interface foi criada com o Tailwindcss e Headless UI para garantir uma experiência de usuário fluida e moderna. </p>
       </section>
     </div>
   </template>

@@ -54,12 +54,15 @@
                   <p><strong>Possui Carro?</strong> {{ form.car ? 'Sim' : 'Não' }}</p>
                   <p><strong>Espécie do Pet:</strong> {{ form.pet ? 'Cão' : 'Gato' }}</p>
                   <p><strong>Raça do Pet:</strong> {{ form.petBreed.name }}</p>
+                  <p v-if="form.other"><strong>Raça:</strong> {{ form.other }}</p>
                 </div>
               </div>
               <div class="mt-4">
                 <button
                   type="button"
-                  class="cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-sky-700 px-4 py-2 text-sm font-medium text-stone-50 hover:bg-sky-800"
+                  class="cursor-pointer inline-flex justify-center 
+                  rounded-md border border-transparent bg-sky-700 px-4 
+                  py-2 text-sm font-medium text-stone-50 hover:bg-sky-800"
                   @click="closeModal"
                 >
                   Fechar

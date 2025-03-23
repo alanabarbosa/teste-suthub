@@ -256,6 +256,7 @@ export default {
       }
       
     };
+    
 
     const dogBreed = [
       { id: 0, name: 'Selecione uma opção' },
@@ -286,7 +287,17 @@ export default {
         v$.value.car.$touch(); 
       }
     });
-    
+
+    watch(() => form.petBreed, (newValue) => {
+      if (newValue && newValue.id !== 6) {
+        form.other = '';        
+ 
+        if (v$.value.other) {
+          v$.value.other.$reset();
+        }
+      }
+    }, { deep: true });    
+        
     
     return { 
       form, 

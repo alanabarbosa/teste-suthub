@@ -70,7 +70,28 @@ export const useRegisterService = (form: UserForm, v$?: Ref<any>) => {
     }
   };
 
+  const resetForm = () => {
+    // Resetar todos os campos para valores padrão
+    Object.keys(form).forEach(key => {
+      if (key === 'car') {
+        form[key] = false;
+      } else if (key === 'pet') {
+        form[key] = false;
+      } else if (key === 'petBreed') {
+        form[key] = { id: null, name: 'Selecione uma opção' };
+      } else {
+        form[key] = '';
+      }
+    });
+
+    // Se existir validador, resete todas as validações
+    if (v$ && v$.value) {
+      v$.value.$reset();
+    }
+  };
+
   return {
-    submitUserData
+    submitUserData,
+    resetForm
   };
 };
