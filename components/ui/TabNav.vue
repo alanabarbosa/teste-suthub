@@ -11,7 +11,7 @@
                 <button
                 :class="[
                     'cursor-pointer px-4 sm:px-2 w-full rounded-lg py-2 text-sm font-medium leading-5',
-                    'border-b-2 border-b-blue-400 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                    'border-b-2 border-b-blue-400 lg:border-none ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                     selected
                     ? 'bg-sky-700 text-white shadow'
                     : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
