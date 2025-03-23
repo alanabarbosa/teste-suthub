@@ -19,7 +19,8 @@
     </div>
     
     <div v-else="paginatedRecipes.length" class="flex flex-col">
-      <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2
+       lg:grid-cols-4 gap-4">
         <div v-for="recipe in paginatedRecipes" :key="recipe.name">
           <Card :recipe="recipe" />
         </div>
