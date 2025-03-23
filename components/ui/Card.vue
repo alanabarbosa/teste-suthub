@@ -5,7 +5,7 @@
     <img class="rounded-t-lg" 
     :src="recipe.image" alt="" />
     <div class="p-5 grid gap-5">
-      <a href="#" class="flex justify-between items-center">
+      <button class="flex justify-between items-center">
         <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 
         dark:text-white">
           {{ recipe.name }}
@@ -14,7 +14,7 @@
           :isActive="isFavorite(recipe.id)"
           @click="toggleFavorite(recipe.id)"
         />       
-      </a>
+      </button>
 
       <ul class="h-[80px] mb-3
       flex gap-2 items-center flex-wrap 
@@ -28,8 +28,7 @@
           {{ tag }}
         </li>
       </ul>        
-      <a 
-        href="#" 
+      <button 
         class="inline-flex items-center px-3 py-2 text-sm font-medium 
         text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 
         focus:ring-4 focus:outline-none focus:ring-gray-300"
@@ -47,7 +46,7 @@
           stroke-width="2" 
           d="M1 5h12m0 0L9 1m4 4L9 9"/>
         </svg>
-      </a>
+      </button>
     </div>
 
     <TransitionRoot as="template" 
