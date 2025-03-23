@@ -35,6 +35,8 @@ Você pode rodar a aplicação utilizando Docker, o que facilita a configuraçã
    ```bash
    docker-compose up -d --build
 
+2. **Acessar a aplicação: Abra o navegador e acesse o seguinte endereço:**
+
    ```bash
    http://localhost:3000
 
