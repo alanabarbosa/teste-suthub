@@ -24,7 +24,6 @@
             class="cursor-pointer hover:bg-sky-800 px-5 py-2 
             rounded-sm hover:text-text-10 block"
             exact-active-class="bg-sky-800 text-gray-10"
-            
           >
             {{ link.label }}
           </NuxtLink>
@@ -35,21 +34,52 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject, watch, computed } from "vue";
 import MenuMobile from '~/components/MenuMobile.vue';
 
 const isClient = ref<boolean>(false);
 const isMenuOpen = ref<boolean>(false);
+const { getFromLocalStorage } = useLocalStorage();
 
-const menuLinks = ref<Array<{ path: string, label: string }>>([
+// Referência para a contagem de favoritos
+const favoritesCount = ref<number>(0);
+
+// Links do menu como um computed property para atualização reativa
+const menuLinks = computed(() => [
   { path: '/', label: 'Home' },
   { path: '/register', label: 'Cadastro de usuários' },
   { path: '/recipes', label: 'Galeria de receitas' },
   { path: '/users', label: 'Lista de usuários' },
+  { path: '/favorites', label: `Receitas favoritas (${favoritesCount.value})` },
 ]);
 
+// Função para obter a contagem de favoritos do localStorage
+const getFavoritesCount = () => {
+  try {
+    const favorites = JSON.parse(getFromLocalStorage("recipesFavorites", "[]"));
+    return favorites.length;
+  } catch (error) {
+    console.error("Erro ao carregar favoritos:", error);
+    return 0;
+  }
+};
+
+// Função que escuta as mudanças nos favoritos usando um evento personalizado
+const setupFavoritesListener = () => {
+  window.addEventListener('favorites-updated', () => {
+    favoritesCount.value = getFavoritesCount();
+  });
+};
+
+// Inicialização ao montar o componente
 onMounted(() => {
   isClient.value = true;
   isMenuOpen.value = false;
+  
+  // Configura a contagem inicial de favoritos
+  favoritesCount.value = getFavoritesCount();
+  
+  // Configura o ouvinte de eventos para atualizações
+  setupFavoritesListener();
 });
 </script>

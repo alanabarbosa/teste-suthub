@@ -17,7 +17,7 @@
       <div class="mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2
        lg:grid-cols-4 xl-grid-cols-3 gap-4">
         <div v-for="recipe in paginatedRecipes" :key="recipe.name">
-          <Card :recipe="recipe" />
+          <Card :recipe="recipe"/>
         </div>
       </div>
       <Pagination 
@@ -39,9 +39,9 @@ import Card from "@/components/Card.vue";
 import Loading from "@/components/Loading.vue";
 import { useRecipeService } from '@/composables/useRecipeService';
 import { useTagService } from '@/composables/useTagService';
-import { useLocalStorage } from '@/composables/useLocalStorage';
 
 interface Recipe {
+  id: number,
   name: string;
   image: string;
   ingredients: string[];
@@ -54,7 +54,13 @@ interface Recipe {
 }
 
 export default {
-  components: { CustomTitle, Card, Checkbox, Pagination, Loading },
+  components: { 
+    CustomTitle, 
+    Card, 
+    Checkbox, 
+    Pagination, 
+    Loading 
+  },
   
   setup() {
     const recipes = ref<Recipe[]>([]);
@@ -65,7 +71,7 @@ export default {
     const currentPage = ref(1);
     const itemsPerPage = ref(10);
     const allFilteredRecipes = ref<Recipe[]>([]);
-      const allTagsFiltered = ref<string[]>([]);
+    
     
     const { fetchRecipes, fetchRecipesByTag } = useRecipeService();
     const { fetchTags } = useTagService();
@@ -107,13 +113,11 @@ export default {
       } finally {
         isLoading.value = false;
       }
-    };
-    
-    // Carrega as tags disponíveis
+    };    
+
     const loadTags = async () => {
       try {
-        const response = await fetchTags();
-        //console.log("loadTags: " + JSON.stringify(response))
+        const response = await fetchTags();       
         if (response.success && response.data) {
           availableTags.value = response.data as string[];
         } else {
@@ -122,15 +126,13 @@ export default {
       } catch (error) {
         console.error("Erro ao carregar tags:", error);
       }
-    };
-    
-    // Manipula a mudança de página
+    };    
+
     const onPageChange = (page: number) => {
       currentPage.value = page;
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    
-    // Reseta a página quando os filtros mudam
+    };    
+
     watch(selectedTags, () => {
       currentPage.value = 1;
     });
@@ -151,7 +153,7 @@ export default {
       isLoading,
       onPageChange,
       fetchRecipesByTag,
-      useLocalStorage,
+      useLocalStorage
     };
   },
 };

@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 
 interface Recipe {
+  id: number,
   image: string;
   name: string;
   ingredients: [];

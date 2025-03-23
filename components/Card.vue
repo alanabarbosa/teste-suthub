@@ -11,6 +11,11 @@
         dark:text-white">
           {{ recipe.name }}
         </h5>
+        {{ recipe.id }}
+        <Heart
+          :isActive="isFavorite(recipe.id)"
+          @click="toggleFavorite(recipe.id)"
+        />       
       </a>
 
       <ul class="h-[80px] mb-3
@@ -78,6 +83,8 @@
   import { ref } from 'vue';
   import { Dialog, DialogOverlay, DialogTitle, TransitionRoot } from '@headlessui/vue';
   import TabNav from "@/components/TabNav.vue";
+  import Heart from "@/components/Heart.vue";
+
 
   interface Recipe {
     image: string;
@@ -96,10 +103,31 @@
     recipe: {
       type: Object as () => Recipe,
       required: true
-    }
+    },    
   });
-
+  const { saveToLocalStorage, getFromLocalStorage } = useLocalStorage();
   const isOpen = ref(false);
+  const favorites = ref<number[]>(JSON.parse(getFromLocalStorage("recipesFavorites", "[]")));
+
+  const toggleFavorite = (recipeId: number): void => {
+    console.log("Favorito clicado: ", recipeId);
+    const existingFavorites = JSON.parse(getFromLocalStorage("recipesFavorites", "[]"));
+    
+    if (existingFavorites.includes(recipeId)) {
+      favorites.value = existingFavorites.filter((id: number) => id !== recipeId);
+    } else {
+      favorites.value = [...existingFavorites, recipeId];
+    }
+
+    saveToLocalStorage("recipesFavorites", JSON.stringify(favorites.value));
+    
+    // Disparar um evento personalizado que o cabeçalho irá escutar
+    window.dispatchEvent(new CustomEvent('favorites-updated'));
+  };
+
+  const isFavorite = (recipeId: number): boolean => {  
+    return favorites.value.includes(recipeId);
+  };
 
   const openModal = () => {
     isOpen.value = true;
