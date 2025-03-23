@@ -10,7 +10,7 @@ Esta aplicação foi desenvolvida para o teste da **SUTHUB**, onde o objetivo é
 - **TypeScript**
 - **Docker** (para containerização da aplicação)
 - **VeeValidate** (para validações)
-- **Axios** (para chamadas à API DummyJSON)
+- **Fetch API** (para chamadas à API DummyJSON)
 
 ---
 
