@@ -61,11 +61,11 @@
      
           <TabPanel :class="['rounded-xl bg-white p-6']">
             <div class="mb-4 grid gap-2">
-              <p>
+              <p class="flex items-center gap-2">
                 <strong>Tempo total de preparação: </strong>{{ recipe.prepTimeMinutes + recipe.cookTimeMinutes }} min
                 <font-awesome-icon :icon="['fas', 'clock']" class="text-blue-500 h-6 w-6" />
               </p>
-              <p>
+              <p class="flex items-center gap-3">
                 <strong>Porções: </strong>{{ recipe.servings }}
                 <span class="inline-flex flex-wrap">
                   <font-awesome-icon 
@@ -76,7 +76,7 @@
                   />
                 </span>
               </p>
-              <p>
+              <p class="flex items-center gap-3">
                 <strong>Avaliação: </strong>{{ recipe.rating }}/5
                 <span class="inline-flex flex-wrap">
                   <font-awesome-icon 
@@ -98,7 +98,7 @@
                   />
                 </span>
               </p>
-              <p><strong>Dificuldade: </strong>{{ getDifficulty }}</p>
+              <p class="flex items-center gap-3"><strong>Dificuldade: </strong>{{ getDifficulty }}</p>
             </div>
           </TabPanel>
 

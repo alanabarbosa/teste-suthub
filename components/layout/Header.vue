@@ -6,7 +6,7 @@
     <nav class="container flex justify-between items-center 
     text-stone-50 my-0 mx-auto">
       <NuxtLink to="/" alt="botão para ir para o inicio" 
-      class="cursor-pointer uppercase lg:text-xl hover:underline text-lg">
+      class="cursor-pointer uppercase lg:text-xl hover:underline text-md">
         Teste Shuthub
       </NuxtLink>
       <MenuMobile
