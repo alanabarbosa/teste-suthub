@@ -18,9 +18,9 @@
             {{ selectedValue?.name || 'Selecione uma opção' }}
           </span>
           <span
-            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            class="cursor-pointer pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronUpDownIcon
-              class="h-5 w-5 text-gray-400"
+              class="h-5 w-5 text-gray-400 cursor-pointer"
               aria-hidden="true"
             />
           </span>
@@ -31,9 +31,10 @@
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
         >
-          <ListboxOptions
-            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 focus:outline-none sm:text-sm z-10"
+        <ListboxOptions
+            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 focus:outline-none sm:text-sm z-50 top-[-246px] lg:top-[37px]"
           >
+
             <ListboxOption
               v-slot="{ active, selected }"
               v-for="option in options"

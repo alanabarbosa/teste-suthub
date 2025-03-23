@@ -3,8 +3,10 @@
     'bg-sky-700 py-3 px-2 transition-all duration-300',
     isFixed ? 'fixed w-full top-0 left-0 z-50 shadow-md' : 'relative'
   ]">
-    <nav class="container flex justify-between items-center text-stone-50 my-0 mx-auto">
-      <NuxtLink to="/" alt="botão para ir para o inicio" class="cursor-pointer uppercase text-xl hover:underline">
+    <nav class="container flex justify-between items-center 
+    text-stone-50 my-0 mx-auto">
+      <NuxtLink to="/" alt="botão para ir para o inicio" 
+      class="cursor-pointer uppercase lg:text-xl hover:underline text-lg">
         Teste Shuthub
       </NuxtLink>
       <MenuMobile
