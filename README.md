@@ -17,7 +17,7 @@ Esta aplicação foi desenvolvida para o teste da **SUTHUB**, onde o objetivo é
 ## Menu de Navegação
 
 - [Iniciar com Docker](#1-iniciar-com-docker)
-- [Executar Localmente com Vite](#2-executar-localmente-com-vite)
+- [Executar Localmente usando o Nuxt 3](#2-executar-localmente-usando-o-nuxt-3)
 
 ---
 
@@ -39,9 +39,9 @@ Você pode rodar a aplicação utilizando Docker, o que facilita a configuraçã
    http://localhost:3000
 
 
-### 2. Executar Localmente 
+### 2. Executar Localmente usando o Nuxt 3
 
-Se preferir executar a aplicação localmente sem Docker, você pode usar Vite para desenvolvimento:
+Se preferir executar a aplicação localmente sem Docker, você pode usar o Nuxt para desenvolvimento:
 
 #### Passos para executar a aplicação localmente:
 
