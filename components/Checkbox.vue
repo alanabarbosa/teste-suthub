@@ -30,7 +30,17 @@
         >
           <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
             <div class="relative gap-8 bg-white p-7
-            h-[300px] overflow-y-auto">
+            h-[300px] overflow-y-auto flex flex-col">
+            <button
+            @click="clearFilters"
+              type="button"
+              class="col-span-full cursor-pointer mt-3 inline-flex w-full 
+                justify-center rounded-md px-3 py-2 text-sm font-semibold ring-1 
+                shadow-xs ring-gray-300 ring-inset  sm:mt-0 sm:w-auto 
+                bg-sky-700 px-4 py-2 text-sm font-medium text-stone-50 
+                hover:bg-sky-800 w-max mx-auto" >
+              Limpar todas os filtros
+            </button>
               <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 
               md:grid-cols-3  gap-2 my-4">
               <div v-for="tag in tags" :key="tag" class="flex items-center">
@@ -42,7 +52,7 @@
                   class="w-4 h-4 text-sky-600 border-gray-300 rounded 
                   focus:ring-sky-500"
                   @change="(e: any) => updateDataAttribute(e, tag)"
-                  :ref="(el: HTMLInputElement | null) => { if (el) itemRefs[tag] = el }"
+                 :ref="`checkbox-${tag}`"
                 />
                 <label :for="tag" class="ml-2 text-gray-700 dark:text-sky">
                   {{ tag }}
@@ -61,7 +71,6 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { defineProps, defineEmits, ref, watch, nextTick } from 'vue';
-import { useLocalStorage } from '@/composables/useLocalStorage';
 
 const props = defineProps({
   tags: {
@@ -76,36 +85,18 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
-const { saveToLocalStorage, getFromLocalStorage } = useLocalStorage();
 
 const selectedTagsInternal = ref<string[]>([]);
 const itemRefs = ref<Record<string, HTMLInputElement>>({});
-
 
 const isTagSelected = (tag: string) => {
   return selectedTagsInternal.value.includes(tag);
 };
 
-
 const updateDataAttribute = (event: Event, tag: string) => {
   const checkbox = event.target as HTMLInputElement;
   const isChecked = checkbox.checked;
-
-
   checkbox.setAttribute('data-id', isChecked.toString());
-
-
-  let storedTags = getFromLocalStorage('selectedTags', [] as string[]);
-
-  if (isChecked) { 
-    if (!storedTags.includes(tag)) {
-      storedTags.push(tag);
-    }
-  } else {
-    storedTags = storedTags.filter((storedTag) => storedTag !== tag);
-  }
-
-  saveToLocalStorage('selectedTags', storedTags);
 };
 
 const updateAllDataAttributes = () => {
@@ -118,6 +109,16 @@ const updateAllDataAttributes = () => {
   });
 };
 
+const clearFilters = () => {
+  selectedTagsInternal.value = [];
+
+  Object.values(itemRefs.value).forEach((checkbox) => {
+    checkbox.checked = false;
+    checkbox.setAttribute('data-id', 'false');
+  });
+
+  emit('update:modelValue', []);
+};
 
 watch(
   () => props.modelValue,

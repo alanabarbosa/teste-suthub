@@ -40,7 +40,11 @@
                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">                 
                   <button 
                   type="button" 
-                  class="cursor-pointer mt-3 inline-flex w-full justify-center rounded-md  px-3 py-2 text-sm font-semibold ring-1 shadow-xs ring-gray-300 ring-inset  sm:mt-0 sm:w-auto bg-sky-700 px-4 py-2 text-sm font-medium text-stone-50 hover:bg-sky-800"
+                  class="cursor-pointer mt-3 inline-flex w-full justify-center 
+                  rounded-md  px-3 py-2 text-sm font-semibold ring-1 
+                  shadow-xs ring-gray-300 ring-inset  sm:mt-0 sm:w-auto 
+                  bg-sky-700 px-4 py-2 text-sm font-medium text-stone-50 
+                  hover:bg-sky-800"
                   @click="$emit('close')">Fechar</button>
                 </div>
               </DialogPanel>

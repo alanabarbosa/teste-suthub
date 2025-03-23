@@ -20,14 +20,12 @@
   import { ref, defineEmits } from 'vue';
   
   const query = ref('');
-  const emit = defineEmits(['search']);
-  
-  // Emitir o valor da pesquisa quando o input mudar
+  const emit = defineEmits(['search']);  
+
   const onSearch = () => {
     emit('search', query.value);
-  };
-  
-  // Limpar a pesquisa e emitir o valor vazio
+  };  
+
   const clearSearch = () => {
     query.value = '';
     emit('search', query.value);

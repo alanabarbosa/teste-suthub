@@ -42,9 +42,8 @@
   const { fetchRecipesFavorites, favoriteRecipes, totalRecipes, setupFavoritesListener } = useRecipeFavoritesService();
   const { saveToLocalStorage, getFromLocalStorage } = useLocalStorage();
   const loaded = ref(false);
-  const localFavorites = ref<number[]>([]);
-  
-  // Inicializa os favoritos do localStorage
+  const localFavorites = ref<number[]>([]);  
+
   const initFavorites = () => {
     try {
       localFavorites.value = JSON.parse(getFromLocalStorage("recipesFavorites", "[]"));
@@ -52,34 +51,27 @@
       console.error("Erro ao carregar favoritos:", error);
       localFavorites.value = [];
     }
-  };
-  
-  // Função que lida com o toggle do favorito
+  };  
+
   const handleToggleFavorite = async (recipeId: number): Promise<void> => {
-    console.log("Removendo favorito:", recipeId);
-    
-    // Atualiza localFavorites
+    console.log("Removendo favorito:", recipeId);    
+
     if (localFavorites.value.includes(recipeId)) {
       localFavorites.value = localFavorites.value.filter(id => id !== recipeId);
     } else {
       localFavorites.value = [...localFavorites.value, recipeId];
-    }
+    }    
+
+    saveToLocalStorage("recipesFavorites", JSON.stringify(localFavorites.value));    
     
-    // Salva no localStorage
-    saveToLocalStorage("recipesFavorites", JSON.stringify(localFavorites.value));
-    
-    // Atualiza a lista de receitas favoritas (com um leve atraso para a animação ser visível)
     if (localFavorites.value.includes(recipeId)) {
-      // Se adicionou, atualiza imediatamente
       await fetchRecipesFavorites();
     } else {
-      // Se removeu, aplica a animação antes de remover
       setTimeout(() => {
         favoriteRecipes.value = favoriteRecipes.value.filter(recipe => localFavorites.value.includes(recipe.id));
-      }, 50); // Pequeno atraso para garantir que a animação seja iniciada
-    }
-    
-    // Dispara o evento para atualizar o contador no cabeçalho
+      }, 50);
+    }    
+
     window.dispatchEvent(new CustomEvent('favorites-updated'));
   };
   
@@ -90,12 +82,11 @@
   onMounted(async () => {
     initFavorites();
     await fetchRecipesFavorites();
-    loaded.value = true;
-    
-    // Configura o listener para atualizar os favoritos quando mudanças ocorrerem
+    loaded.value = true;    
+
     const cleanupListener = setupFavoritesListener();
     
-    // Quando o componente for desmontado, remove o listener
+
     onUnmounted(() => {
       cleanupListener();
     });
@@ -103,7 +94,6 @@
   </script>
   
   <style scoped>
-  /* Estilos para a animação de transição */
   .card-fade-enter-active,
   .card-fade-leave-active {
     transition: all 0.5s ease;
@@ -119,7 +109,6 @@
     transform: translateY(-20px) scale(0.95);
   }
   
-  /* Garante que o layout da grid se ajuste suavemente */
   .card-item {
     transition: all 0.5s ease;
   }
