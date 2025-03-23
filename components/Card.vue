@@ -1,17 +1,15 @@
 <template>
   <div class="max-w-sm sm:h-[auto]
-
   border border-sky-200 rounded-lg 
-  shadow-sm bg-sky-800 dark:border-sky-700">
+  shadow-sm bg-sky-800 dark:border-sky-700 card-transition">
     <img class="rounded-t-lg" 
     :src="recipe.image" alt="" />
     <div class="p-5 grid gap-5">
-      <a href="#">
-        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 
+      <a href="#" class="flex justify-between items-center">
+        <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 
         dark:text-white">
           {{ recipe.name }}
         </h5>
-        {{ recipe.id }}
         <Heart
           :isActive="isFavorite(recipe.id)"
           @click="toggleFavorite(recipe.id)"
@@ -80,11 +78,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import { Dialog, DialogOverlay, DialogTitle, TransitionRoot } from '@headlessui/vue';
   import TabNav from "@/components/TabNav.vue";
   import Heart from "@/components/Heart.vue";
-
 
   interface Recipe {
     image: string;
@@ -119,9 +116,8 @@
       favorites.value = [...existingFavorites, recipeId];
     }
 
-    saveToLocalStorage("recipesFavorites", JSON.stringify(favorites.value));
-    
-    // Disparar um evento personalizado que o cabeçalho irá escutar
+    saveToLocalStorage("recipesFavorites", JSON.stringify(favorites.value));    
+
     window.dispatchEvent(new CustomEvent('favorites-updated'));
   };
 
@@ -133,3 +129,15 @@
     isOpen.value = true;
   };
 </script>
+
+<style scoped>
+.card-transition {
+  transition: all 0.5s ease;
+}
+
+/* Animação opcional quando o cursor passa por cima do card */
+.card-transition:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+</style>
