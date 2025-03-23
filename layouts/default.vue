@@ -8,15 +8,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import Header from "@/components/layout/Header.vue";
 import Footer from "@/components/layout/Footer.vue";
+import { useHead } from '#app';
 
-export default {
-  name: 'Layout',
-  components: {
-    Header,
-    Footer,
-  },
-};
+useHead({
+  title: 'Teste Suthub',
+});
 </script>

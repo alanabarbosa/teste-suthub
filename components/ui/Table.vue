@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+
 interface User {
   image: string;
   fullName: string;

@@ -23,6 +23,7 @@ import Table from "@/components/ui/Table.vue";
 import CustomTitle from "@/components/ui/Title.vue";
 import Search from "@/components/form/Search.vue";
 import Pagination from "@/components/ui/Pagination.vue";
+import Loading from "@/components/ui/Loading.vue";
 import { useUserService } from '@/composables/user/useUserService';
 
 
@@ -38,7 +39,7 @@ interface User {
 }
 
 export default {
-  components: { Table, Pagination, Search, CustomTitle },
+  components: { Table, Pagination, Search, CustomTitle, Loading },
 
   setup() {
     const tableHeaders = [
