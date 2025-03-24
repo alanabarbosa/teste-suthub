@@ -1,5 +1,5 @@
 <template>
-  <div class="slide-top max-w-sm sm:h-[auto]
+  <div class="slide-top max-w-sm sm:h-[560px]
   border border-sky-200 rounded-lg 
   shadow-sm bg-sky-800 dark:border-sky-700 card-transition">
     <img class="rounded-t-lg" 
@@ -16,7 +16,7 @@
         />       
       </button>
 
-      <ul class="h-[80px] mb-3
+      <ul class="h-[109px] mb-3
       flex gap-2 items-center flex-wrap 
       font-normal text-gray-900 dark:text-white mb-5">
         Tags: 
@@ -29,7 +29,7 @@
         </li>
       </ul>        
       <button 
-        class="inline-flex items-center px-3 py-2 text-sm font-medium 
+        class="h=[80px] inline-flex items-center px-3 py-2 text-sm font-medium 
         text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 
         focus:ring-4 focus:outline-none focus:ring-gray-300"
         @click="openModal"
