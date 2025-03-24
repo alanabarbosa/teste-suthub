@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col  slide-top max-w-sm sm:h-[560px]
+  <div class="flex flex-col  slide-top max-w-sm lg:h-[634px] sm:h-[560px]
   border border-sky-200 rounded-lg 
   shadow-sm bg-sky-800 dark:border-sky-700 card-transition">
     <img class="rounded-t-lg" 
