@@ -2,7 +2,8 @@
   <div class="px-4 lg:px-0 lg:py-0 md:px-8 sm:px-8 container 
   flex justify-center flex-col mt-8 w-full my-0 mx-auto">    
     <div
-      class="mb-6 grid flex-col items-center gap-4 justify-center">
+      class="mb-6 
+      grid flex-col items-center gap-4 justify-center">
       <CustomTitle title="Galeria de receitas" />
       <Checkbox 
         :tags="availableTags" 
@@ -14,8 +15,10 @@
         <p>Carregando receitas...</p>
     </div>    
     <div v-else class="flex flex-col">
-      <div class="mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2
-       lg:grid-cols-4 xl-grid-cols-3 gap-4">
+      <div class="mx-auto grid     
+      sm:grid-cols-1 
+      md:grid-cols-3
+      lg:grid-cols-4 gap-4">
         <div v-for="recipe in paginatedRecipes" :key="recipe.name">
           <Card :recipe="recipe"/>
         </div>
