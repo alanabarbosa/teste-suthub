@@ -1,11 +1,11 @@
 <template>
-  <div class="slide-top max-w-sm sm:h-[560px]
+  <div class="flex flex-col  slide-top max-w-sm sm:h-[560px]
   border border-sky-200 rounded-lg 
   shadow-sm bg-sky-800 dark:border-sky-700 card-transition">
     <img class="rounded-t-lg" 
     :src="recipe.image" alt="" />
     <div class="p-5 grid gap-5">
-      <button class="flex justify-between items-center">
+      <button class="flex justify-between items-center h-[80px]">
         <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 
         dark:text-white">
           {{ recipe.name }}
